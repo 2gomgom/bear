@@ -10,5 +10,25 @@
     "bgImagePath": "",
     "heartColor": "#c9184a"
   },
-  "images": []
+  "images": [
+    {
+      "id": "mrigbve7z482n",
+      "path": "images/mrigbve7z482n.png",
+      "title": "",
+      "subtitle": "페더",
+      "ddayDate": "2026-05-07",
+      "heartColor": "#c9184a",
+      "category": [
+        "ARCH MAIN"
+      ],
+      "tags": {
+        "appearance": [],
+        "outfit": []
+      },
+      "memo": "",
+      "profile": "",
+      "extraImages": [],
+      "createdAt": "2026-07-12T23:55:52.111Z"
+    }
+  ]
 }
