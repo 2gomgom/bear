@@ -36,6 +36,8 @@
   }
   ::selection{ background:var(--blue-bg); }
 
+  #coverWrap{ width:100%; height:130px; background-size:cover; background-position:center; background-color:var(--bg-soft); }
+
   header{ position:sticky; top:0; z-index:40; display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); }
   .brand{ display:flex; align-items:center; gap:10px; cursor:pointer; }
   .avatar{ width:32px; height:32px; border-radius:7px; object-fit:cover; border:1px solid var(--border); background:var(--bg-soft); }
@@ -66,13 +68,14 @@
   @keyframes shimmer{ 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
   .card-cap{ padding:9px 10px 10px; border-top:1px solid var(--border); }
   .card-title{ font-size:13px; font-weight:600; line-height:1.3; margin-bottom:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .card-sub{ font-size:11.5px; color:var(--text-faint); line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; min-height:15px; }
-  .card-dday{ font-size:11.5px; font-weight:700; color:var(--heart); margin-top:2px; }
+  .card-subtags{ display:flex; flex-wrap:wrap; gap:4px; min-height:15px; }
+  .card-dday{ font-size:11.5px; font-weight:700; color:var(--heart); margin-top:4px; }
   .card-pills{ display:flex; flex-wrap:wrap; gap:4px; margin-top:6px; }
   .pill{ font-size:10.5px; font-weight:500; padding:2px 7px; border-radius:4px; white-space:nowrap; }
   .pill.appearance{ background:var(--blue-bg); color:var(--blue-fg); }
   .pill.outfit{ background:var(--green-bg); color:var(--green-fg); }
   .pill.category{ background:var(--purple-bg); color:var(--purple-fg); }
+  .pill.subtag{ background:var(--gray-bg); color:var(--gray-fg); }
   .pill.more{ background:var(--gray-bg); color:var(--gray-fg); }
 
   .fab{ position:fixed; right:18px; bottom:22px; z-index:50; padding:0 20px; height:50px; border-radius:25px; background:var(--primary); color:#fff; display:flex; align-items:center; gap:6px; font-size:14.5px; font-weight:600; border:none; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,0.25); }
@@ -94,12 +97,14 @@
   .prop-body{ flex:1; min-width:0; }
   .sectionLabel{ font-size:12px; color:var(--text-faint); font-weight:600; margin:16px 0 7px; }
   .miniHint{ font-size:11px; color:var(--text-faint); margin-top:4px; line-height:1.4; }
+  .pairLabel{ font-size:11px; font-weight:700; color:var(--purple-fg); letter-spacing:0.04em; margin-bottom:6px; text-transform:uppercase; }
 
   input[type=text], input[type=password], input[type=date], textarea{ width:100%; padding:8px 0; border:none; border-bottom:1px solid transparent; background:transparent; color:var(--text); font-size:14px; font-family:inherit; outline:none; }
   input[type=text]:focus, input[type=password]:focus, input[type=date]:focus, textarea:focus{ border-bottom-color:var(--text-faint); }
   .boxed input[type=text], .boxed input[type=password], .boxed input[type=date], .boxed textarea{ padding:9px 11px; border-radius:7px; background:var(--bg-soft); border:1px solid var(--border); }
   .boxed input:focus, .boxed textarea:focus{ border-color:#b7b6b3; }
   textarea{ resize:vertical; min-height:56px; line-height:1.5; }
+  input[type=color]{ width:100%; height:38px; border-radius:7px; border:1px solid var(--border); padding:2px; background:var(--bg-soft); cursor:pointer; }
 
   .combinedBox{ background:var(--bg-soft); border:1px solid var(--border); border-radius:7px; padding:10px 11px; font-size:13px; line-height:1.6; color:var(--text-muted); min-height:22px; word-break:break-word; }
   .combinedBox.empty{ color:var(--text-faint); font-style:italic; }
@@ -109,11 +114,21 @@
   .filePick{ display:flex; align-items:center; gap:12px; padding:10px; border-radius:7px; border:1.5px dashed var(--border); cursor:pointer; color:var(--text-muted); font-size:12.5px; }
   .filePick img{ width:46px; height:46px; object-fit:cover; border-radius:6px; }
 
-  .extraItemRow{ display:flex; gap:10px; align-items:flex-start; padding:8px; border:1px solid var(--border); border-radius:8px; margin-bottom:8px; }
+  .extraItemRow{ display:flex; gap:10px; align-items:flex-start; padding:8px; border:1px solid var(--border); border-radius:8px; margin-bottom:10px; }
   .extraThumbBox{ position:relative; width:56px; height:56px; flex-shrink:0; }
   .extraThumbBox img{ width:100%; height:100%; object-fit:cover; border-radius:6px; border:1px solid var(--border); background:var(--bg-soft); }
   .extraThumbBox .rmBtn{ position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%; background:var(--primary); color:#fff; border:none; font-size:10px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; }
   .extraPromptArea{ width:100%; min-height:44px; padding:8px 9px; border-radius:7px; background:var(--bg-soft); border:1px solid var(--border); font-size:12.5px; font-family:inherit; resize:vertical; }
+
+  .extraGrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:10px; }
+  .extraGridItem{ display:flex; flex-direction:column; gap:5px; }
+  .extraGridThumb{ position:relative; aspect-ratio:1/1; border-radius:8px; overflow:hidden; border:1px solid var(--border); background:var(--bg-soft); }
+  .extraGridThumb img{ width:100%; height:100%; object-fit:cover; display:block; cursor:pointer; }
+  .extraGridThumb .rmBtn{ position:absolute; top:4px; right:4px; width:18px; height:18px; border-radius:50%; background:rgba(0,0,0,0.55); color:#fff; border:none; font-size:10px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .extraGridTagRow{ display:flex; gap:4px; align-items:center; }
+  .extraGridTagInput{ flex:1; min-width:0; padding:6px 8px; border-radius:6px; background:var(--bg-soft); border:1px solid var(--border); font-size:11.5px; font-family:inherit; }
+  .extraGridCopyBtn{ flex-shrink:0; width:26px; height:26px; border-radius:6px; background:var(--gray-bg); border:none; font-size:12px; cursor:pointer; }
+  .extraGridTagText{ font-size:11px; color:var(--text-muted); background:var(--bg-soft); border:1px solid var(--border); border-radius:6px; padding:5px 6px; min-height:14px; word-break:break-word; cursor:pointer; }
 
   .btnRow{ display:flex; gap:10px; margin-top:20px; }
   .btn{ flex:1; padding:12px; border-radius:8px; border:none; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; }
@@ -124,11 +139,10 @@
 
   #detailImgWrap{ border-radius:9px; overflow:hidden; margin-bottom:14px; background:var(--bg-soft); border:1px solid var(--border); }
   #detailImgWrap img{ width:100%; display:block; max-height:56vh; object-fit:contain; }
-  #detailTitle{ font-size:19px; font-weight:700; margin-bottom:2px; word-break:break-word; }
-  #detailSubtitle{ font-size:13px; color:var(--text-faint); }
+  #detailTitle{ font-size:19px; font-weight:700; margin-bottom:6px; word-break:break-word; }
+  #detailSubtitleTags{ display:flex; flex-wrap:wrap; gap:5px; margin-bottom:4px; }
   #detailDday{ font-size:13px; font-weight:700; color:var(--heart); margin-bottom:8px; }
   .tagList{ display:flex; flex-wrap:wrap; gap:6px; }
-  #detailExtraWrap{ display:flex; flex-direction:column; gap:8px; }
 
   #lightboxModal img{ width:100%; max-height:80vh; object-fit:contain; border-radius:10px; }
   #lightboxModal .modal{ background:transparent; box-shadow:none; padding:0; max-width:640px; }
@@ -157,6 +171,7 @@
 </div>
 
 <div id="app" class="hidden">
+  <div id="coverWrap" class="hidden"></div>
   <header>
     <div class="brand" onclick="openProfile()">
       <img id="avatarImg" class="avatar hidden" />
@@ -198,7 +213,7 @@
   </div>
 </div>
 
-<!-- 프로필(아카이브 주인장) 모달 -->
+<!-- 프로필(아카이브 주인장) + 테마 모달 -->
 <div class="modalBg" id="profileModal">
   <div class="modal">
     <button class="closeX" onclick="closeModal('profileModal')">✕</button>
@@ -215,6 +230,25 @@
       <div class="prop"><div class="prop-label">이름</div><div class="prop-body"><input type="text" id="inProfileName" placeholder="예: 소보로"></div></div>
       <div class="prop"><div class="prop-label">소개</div><div class="prop-body"><textarea id="inProfileBio" placeholder="예: NovelAI 그림 백업 창고"></textarea></div></div>
     </div>
+
+    <div class="sectionLabel">테마</div>
+    <div class="boxed">
+      <div class="prop">
+        <div class="prop-label">배경색</div>
+        <div class="prop-body"><input type="color" id="inBgColor" value="#ffffff"></div>
+      </div>
+      <div class="prop">
+        <div class="prop-label">헤더 이미지</div>
+        <div class="prop-body">
+          <div class="filePick" onclick="document.getElementById('headerFileInput').click()">
+            <img id="headerPreview" class="hidden">
+            <span id="headerPickLabel">탭해서 커버 이미지 선택</span>
+          </div>
+          <input type="file" id="headerFileInput" accept="image/*" class="hidden" onchange="onHeaderFile(event)">
+        </div>
+      </div>
+    </div>
+
     <div class="btnRow"><button class="btn btn-primary" onclick="saveProfile()">저장</button></div>
   </div>
 </div>
@@ -240,7 +274,10 @@
       </div>
       <div class="prop">
         <div class="prop-label">부제목</div>
-        <div class="prop-body"><input type="text" id="upSubtitle" placeholder="예: 페어 캐릭터: OO / 짧은 설명"></div>
+        <div class="prop-body">
+          <input type="text" id="upSubtitle" placeholder="예: 가방 사탕 (띄어쓰기로 구분됨)">
+          <div class="miniHint">띄어쓰기로 구분한 단어가 각각 작은 태그로 표시돼요</div>
+        </div>
       </div>
       <div class="prop">
         <div class="prop-label">♥ 디데이</div>
@@ -289,7 +326,7 @@
       </div>
     </div>
 
-    <div class="sectionLabel">연관 이미지 (페어 캐릭터 등, 여러 장 가능 · 같은 게시물 안에 함께 저장돼요)</div>
+    <div class="sectionLabel">연관 이미지 (첫 장은 Pair, 그 다음부터는 갤러리로 표시돼요 · 같은 게시물 안에 함께 저장돼요)</div>
     <div id="extraImagesList"></div>
     <div class="filePick" onclick="document.getElementById('extraFileInput').click()">
       <span>탭해서 이미지 추가 (여러 장 선택 가능)</span>
@@ -308,7 +345,7 @@
     <button class="closeX" onclick="closeModal('detailModal')">✕</button>
     <div id="detailImgWrap"><img id="detailImg"></div>
     <div id="detailTitle"></div>
-    <div id="detailSubtitle"></div>
+    <div id="detailSubtitleTags"></div>
     <div id="detailDday" class="hidden"></div>
 
     <div class="prop" style="margin-top:8px;">
@@ -347,7 +384,6 @@
     </div>
 
     <div id="detailExtraSection" class="hidden" style="margin-top:16px;">
-      <div class="sectionLabel" style="margin-top:0;">연관 이미지</div>
       <div id="detailExtraWrap"></div>
     </div>
 
@@ -379,6 +415,7 @@ let isEditingId = null;
 let blobCache = {};
 let pendingUploadFile = null;
 let pendingProfileFile = null;
+let pendingHeaderFile = null;
 let extraItems = []; // {type:'pending', file, previewUrl, prompt} | {type:'existing', path, prompt}
 
 function toast(msg){
@@ -454,9 +491,14 @@ function b64EncodeUnicode(str){
 /* ============ DB ============ */
 async function loadDB(){
   const file = await ghGetFile('db.json');
-  if(!file){ db = {profile:{name:'',bio:'',avatarPath:''}, images:[]}; dbSha = null; return; }
+  if(!file){ db = {profile:{name:'',bio:'',avatarPath:'',bgColor:'',headerImagePath:''}, images:[]}; dbSha = null; return; }
   db = JSON.parse(b64DecodeUnicode(file.content));
-  if(!db.profile) db.profile = {name:'',bio:'',avatarPath:''};
+  if(!db.profile) db.profile = {};
+  if(db.profile.name===undefined) db.profile.name='';
+  if(db.profile.bio===undefined) db.profile.bio='';
+  if(db.profile.avatarPath===undefined) db.profile.avatarPath='';
+  if(db.profile.bgColor===undefined) db.profile.bgColor='';
+  if(db.profile.headerImagePath===undefined) db.profile.headerImagePath='';
   if(!db.images) db.images = [];
   db.images.forEach(img=>{
     if(!img.tags) img.tags = {appearance:[], outfit:[]};
@@ -492,7 +534,7 @@ async function init(){
   await refreshAll();
 }
 async function refreshAll(){
-  try{ await loadDB(); renderProfile(); renderFilters(); renderGallery(); }
+  try{ await loadDB(); renderProfile(); applyTheme(); renderFilters(); renderGallery(); }
   catch(e){ toast(e.message || '불러오기 중 오류가 발생했어요'); }
 }
 
@@ -523,13 +565,18 @@ async function saveSettings(){
 }
 function closeModal(id){ document.getElementById(id).classList.remove('show'); }
 
-/* ============ 프로필(아카이브 주인장) ============ */
+/* ============ 프로필(아카이브 주인장) + 테마 ============ */
 function openProfile(){
   document.getElementById('inProfileName').value = db?.profile?.name || '';
   document.getElementById('inProfileBio').value = db?.profile?.bio || '';
+  document.getElementById('inBgColor').value = db?.profile?.bgColor || '#ffffff';
   const prev = document.getElementById('profilePreview');
   if(db?.profile?.avatarPath && blobCache[db.profile.avatarPath]){
     prev.src = blobCache[db.profile.avatarPath]; prev.classList.remove('hidden');
+  }
+  const headerPrev = document.getElementById('headerPreview');
+  if(db?.profile?.headerImagePath && blobCache[db.profile.headerImagePath]){
+    headerPrev.src = blobCache[db.profile.headerImagePath]; headerPrev.classList.remove('hidden');
   }
   document.getElementById('profileModal').classList.add('show');
 }
@@ -541,6 +588,17 @@ function onProfileFile(e){
     const prev = document.getElementById('profilePreview');
     prev.src = reader.result; prev.classList.remove('hidden');
     document.getElementById('profilePickLabel').textContent = file.name;
+  };
+  reader.readAsDataURL(file);
+}
+function onHeaderFile(e){
+  const file = e.target.files[0]; if(!file) return;
+  pendingHeaderFile = file;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    const prev = document.getElementById('headerPreview');
+    prev.src = reader.result; prev.classList.remove('hidden');
+    document.getElementById('headerPickLabel').textContent = file.name;
   };
   reader.readAsDataURL(file);
 }
@@ -556,10 +614,21 @@ async function saveProfile(){
       blobCache[path] = URL.createObjectURL(pendingProfileFile);
       pendingProfileFile = null;
     }
+    if(pendingHeaderFile){
+      const b64 = await fileToBase64(pendingHeaderFile);
+      const ext = safeExt(pendingHeaderFile.name);
+      const path = `images/profile-header.${ext}`;
+      await ghPutFile(path, b64, '헤더 이미지 업데이트');
+      db.profile.headerImagePath = path;
+      blobCache[path] = URL.createObjectURL(pendingHeaderFile);
+      pendingHeaderFile = null;
+    }
     db.profile.name = document.getElementById('inProfileName').value.trim();
     db.profile.bio = document.getElementById('inProfileBio').value.trim();
+    db.profile.bgColor = document.getElementById('inBgColor').value || '#ffffff';
     await saveDB('프로필 업데이트');
     renderProfile();
+    applyTheme();
     closeModal('profileModal');
     toast('프로필이 저장됐어요');
   }catch(e){ toast(e.message || '저장 실패'); }
@@ -581,6 +650,26 @@ function renderProfile(){
     }
   }
 }
+function applyTheme(){
+  document.body.style.backgroundColor = db.profile.bgColor || '#ffffff';
+  const cover = document.getElementById('coverWrap');
+  if(db.profile.headerImagePath){
+    cover.classList.remove('hidden');
+    if(blobCache[db.profile.headerImagePath]){
+      cover.style.backgroundImage = `url(${blobCache[db.profile.headerImagePath]})`;
+    }else{
+      ghGetFile(db.profile.headerImagePath).then(f=>{
+        if(!f) return;
+        const url = base64ToBlobUrl(f.content, guessMime(db.profile.headerImagePath));
+        blobCache[db.profile.headerImagePath] = url;
+        cover.style.backgroundImage = `url(${url})`;
+      }).catch(()=>{});
+    }
+  }else{
+    cover.classList.add('hidden');
+    cover.style.backgroundImage = '';
+  }
+}
 
 /* ============ 디데이 ============ */
 function computeDdayText(dateStr){
@@ -592,6 +681,19 @@ function computeDdayText(dateStr){
   const diffDays = Math.round((nowMid - startMid) / 86400000);
   if(diffDays >= 0) return `♥ D+${diffDays + 1}`;
   return `♥ D${diffDays}`;
+}
+
+/* ============ 부제목 → 태그 ============ */
+function subtitleToTags(str){ return (str||'').split(/\s+/).map(s=>s.trim()).filter(Boolean); }
+function renderSubtitleTags(containerId, subtitleStr){
+  const wrap = document.getElementById(containerId);
+  wrap.innerHTML = '';
+  subtitleToTags(subtitleStr).forEach(t=>{
+    const span = document.createElement('span');
+    span.className = 'pill subtag';
+    span.textContent = t;
+    wrap.appendChild(span);
+  });
 }
 
 /* ============ 추가/수정 폼 ============ */
@@ -648,7 +750,7 @@ function openEntryForm(id){
     document.getElementById('uploadSaveBtn').textContent = '저장하기';
   }
   updateCombinedPreview();
-  renderExtraImagesList();
+  renderExtraImagesEditor();
   document.getElementById('uploadModal').classList.add('show');
 }
 function onUploadFile(e){
@@ -668,57 +770,100 @@ function onExtraFiles(e){
     const reader = new FileReader();
     reader.onload = ()=>{
       extraItems.push({type:'pending', file, previewUrl:reader.result, prompt:''});
-      renderExtraImagesList();
+      renderExtraImagesEditor();
     };
     reader.readAsDataURL(file);
   });
   e.target.value = '';
 }
-function renderExtraImagesList(){
+function loadExtraThumbInto(item, imgEl){
+  if(item.type === 'pending'){ imgEl.src = item.previewUrl; return; }
+  if(blobCache[item.path]){ imgEl.src = blobCache[item.path]; return; }
+  ghGetFile(item.path).then(f=>{
+    if(!f) return;
+    const url = base64ToBlobUrl(f.content, guessMime(item.path));
+    blobCache[item.path] = url; imgEl.src = url;
+  }).catch(()=>{});
+}
+function renderExtraImagesEditor(){
   const wrap = document.getElementById('extraImagesList');
   wrap.innerHTML = '';
-  extraItems.forEach((item, idx)=>{
-    const row = document.createElement('div');
-    row.className = 'extraItemRow';
+  if(!extraItems.length) return;
 
-    const thumbBox = document.createElement('div');
-    thumbBox.className = 'extraThumbBox';
-    const thumbImg = document.createElement('img');
-    if(item.type === 'pending'){
-      thumbImg.src = item.previewUrl;
-    }else{
-      if(blobCache[item.path]) thumbImg.src = blobCache[item.path];
-      else{
-        ghGetFile(item.path).then(f=>{
-          if(!f) return;
-          const url = base64ToBlobUrl(f.content, guessMime(item.path));
-          blobCache[item.path] = url; thumbImg.src = url;
-        }).catch(()=>{});
-      }
+  // 첫 번째 = Pair (큰 프롬프트 칸)
+  const pairLabel = document.createElement('div');
+  pairLabel.className = 'pairLabel';
+  pairLabel.textContent = 'Pair';
+  wrap.appendChild(pairLabel);
+
+  const first = extraItems[0];
+  const row = document.createElement('div');
+  row.className = 'extraItemRow';
+  const thumbBox = document.createElement('div');
+  thumbBox.className = 'extraThumbBox';
+  const thumbImg = document.createElement('img');
+  loadExtraThumbInto(first, thumbImg);
+  const rm0 = document.createElement('button');
+  rm0.className = 'rmBtn'; rm0.textContent = '✕';
+  rm0.onclick = (ev)=>{ ev.stopPropagation(); extraItems.splice(0,1); renderExtraImagesEditor(); };
+  thumbBox.appendChild(thumbImg); thumbBox.appendChild(rm0);
+
+  const right = document.createElement('div');
+  right.style.cssText = 'flex:1;min-width:0;';
+  const ta = document.createElement('textarea');
+  ta.className = 'extraPromptArea';
+  ta.placeholder = '이 이미지의 프롬프트/태그 (복붙용, 자유 텍스트)';
+  ta.value = first.prompt || '';
+  ta.oninput = ()=>{ first.prompt = ta.value; };
+  const copyBtn = document.createElement('button');
+  copyBtn.type = 'button'; copyBtn.className = 'copyBtn'; copyBtn.textContent = '⧉ 복사';
+  copyBtn.onclick = ()=> copyText(ta.value);
+  right.appendChild(ta); right.appendChild(copyBtn);
+  row.appendChild(thumbBox); row.appendChild(right);
+  wrap.appendChild(row);
+
+  // 두 번째부터 = 갤러리 그리드
+  if(extraItems.length > 1){
+    const galLabel = document.createElement('div');
+    galLabel.className = 'sectionLabel';
+    galLabel.style.margin = '4px 0 7px';
+    galLabel.textContent = '갤러리';
+    wrap.appendChild(galLabel);
+
+    const grid = document.createElement('div');
+    grid.className = 'extraGrid';
+    for(let idx=1; idx<extraItems.length; idx++){
+      const item = extraItems[idx];
+      const cell = document.createElement('div');
+      cell.className = 'extraGridItem';
+
+      const thumb = document.createElement('div');
+      thumb.className = 'extraGridThumb';
+      const gImg = document.createElement('img');
+      loadExtraThumbInto(item, gImg);
+      const rm = document.createElement('button');
+      rm.className = 'rmBtn'; rm.textContent = '✕';
+      rm.onclick = (ev)=>{ ev.stopPropagation(); extraItems.splice(idx,1); renderExtraImagesEditor(); };
+      thumb.appendChild(gImg); thumb.appendChild(rm);
+
+      const tagRow = document.createElement('div');
+      tagRow.className = 'extraGridTagRow';
+      const tagInput = document.createElement('input');
+      tagInput.type = 'text';
+      tagInput.className = 'extraGridTagInput';
+      tagInput.placeholder = '꼬리 태그';
+      tagInput.value = item.prompt || '';
+      tagInput.oninput = ()=>{ item.prompt = tagInput.value; };
+      const cBtn = document.createElement('button');
+      cBtn.type = 'button'; cBtn.className = 'extraGridCopyBtn'; cBtn.textContent = '⧉';
+      cBtn.onclick = ()=> copyText(tagInput.value);
+      tagRow.appendChild(tagInput); tagRow.appendChild(cBtn);
+
+      cell.appendChild(thumb); cell.appendChild(tagRow);
+      grid.appendChild(cell);
     }
-    const rm = document.createElement('button');
-    rm.className = 'rmBtn';
-    rm.textContent = '✕';
-    rm.onclick = (ev)=>{ ev.stopPropagation(); extraItems.splice(idx,1); renderExtraImagesList(); };
-    thumbBox.appendChild(thumbImg); thumbBox.appendChild(rm);
-
-    const right = document.createElement('div');
-    right.style.cssText = 'flex:1;min-width:0;';
-    const ta = document.createElement('textarea');
-    ta.className = 'extraPromptArea';
-    ta.placeholder = '이 이미지의 프롬프트/태그 (복붙용, 자유 텍스트)';
-    ta.value = item.prompt || '';
-    ta.oninput = ()=>{ item.prompt = ta.value; };
-    const copyBtn = document.createElement('button');
-    copyBtn.type = 'button';
-    copyBtn.className = 'copyBtn';
-    copyBtn.textContent = '⧉ 복사';
-    copyBtn.onclick = ()=> copyText(ta.value);
-    right.appendChild(ta); right.appendChild(copyBtn);
-
-    row.appendChild(thumbBox); row.appendChild(right);
-    wrap.appendChild(row);
-  });
+    wrap.appendChild(grid);
+  }
 }
 
 async function submitEntry(){
@@ -868,10 +1013,16 @@ function renderGallery(){
     title.className = 'card-title';
     title.textContent = img.title || '(제목 없음)';
     cap.appendChild(title);
-    const sub = document.createElement('div');
-    sub.className = 'card-sub';
-    sub.textContent = img.subtitle || '';
-    cap.appendChild(sub);
+
+    const subtagsWrap = document.createElement('div');
+    subtagsWrap.className = 'card-subtags';
+    subtitleToTags(img.subtitle).forEach(t=>{
+      const p = document.createElement('span');
+      p.className = 'pill subtag';
+      p.textContent = t;
+      subtagsWrap.appendChild(p);
+    });
+    cap.appendChild(subtagsWrap);
 
     const ddayText = computeDdayText(img.ddayDate);
     if(ddayText){
@@ -952,47 +1103,91 @@ function renderDetailExtraImages(list){
   wrap.innerHTML = '';
   if(!list || !list.length){ section.classList.add('hidden'); return; }
   section.classList.remove('hidden');
-  list.forEach(item=>{
-    const row = document.createElement('div');
-    row.className = 'extraItemRow';
 
-    const thumb = document.createElement('img');
-    thumb.style.cssText = 'width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex-shrink:0;cursor:pointer;background:var(--bg-soft);';
-    thumb.onclick = ()=> openLightbox(item.path);
-    if(blobCache[item.path]) thumb.src = blobCache[item.path];
-    else{
-      ghGetFile(item.path).then(f=>{
-        if(!f) return;
-        const url = base64ToBlobUrl(f.content, guessMime(item.path));
-        blobCache[item.path] = url; thumb.src = url;
-      }).catch(()=>{});
-    }
-    row.appendChild(thumb);
+  // 첫 번째 = Pair
+  const pairLabel = document.createElement('div');
+  pairLabel.className = 'pairLabel';
+  pairLabel.textContent = 'Pair';
+  wrap.appendChild(pairLabel);
 
-    if(item.prompt){
-      const right = document.createElement('div');
-      right.style.cssText = 'flex:1;min-width:0;';
-      const box = document.createElement('div');
-      box.className = 'combinedBox';
-      box.style.fontSize = '12.5px';
-      box.textContent = item.prompt;
-      const btn = document.createElement('button');
-      btn.className = 'copyBtn';
-      btn.textContent = '⧉ 복사';
-      btn.onclick = ()=> copyText(item.prompt);
-      right.appendChild(box); right.appendChild(btn);
-      row.appendChild(right);
+  const first = list[0];
+  const row = document.createElement('div');
+  row.className = 'extraItemRow';
+  const thumb = document.createElement('img');
+  thumb.style.cssText = 'width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex-shrink:0;cursor:pointer;background:var(--bg-soft);';
+  thumb.onclick = ()=> openLightbox(first.path);
+  if(blobCache[first.path]) thumb.src = blobCache[first.path];
+  else{
+    ghGetFile(first.path).then(f=>{
+      if(!f) return;
+      const url = base64ToBlobUrl(f.content, guessMime(first.path));
+      blobCache[first.path] = url; thumb.src = url;
+    }).catch(()=>{});
+  }
+  row.appendChild(thumb);
+  if(first.prompt){
+    const right = document.createElement('div');
+    right.style.cssText = 'flex:1;min-width:0;';
+    const box = document.createElement('div');
+    box.className = 'combinedBox';
+    box.style.fontSize = '12.5px';
+    box.textContent = first.prompt;
+    const btn = document.createElement('button');
+    btn.className = 'copyBtn'; btn.textContent = '⧉ 복사';
+    btn.onclick = ()=> copyText(first.prompt);
+    right.appendChild(box); right.appendChild(btn);
+    row.appendChild(right);
+  }
+  wrap.appendChild(row);
+
+  // 두 번째부터 = 갤러리 그리드
+  if(list.length > 1){
+    const galLabel = document.createElement('div');
+    galLabel.className = 'sectionLabel';
+    galLabel.style.margin = '4px 0 7px';
+    galLabel.textContent = '갤러리';
+    wrap.appendChild(galLabel);
+
+    const grid = document.createElement('div');
+    grid.className = 'extraGrid';
+    for(let idx=1; idx<list.length; idx++){
+      const item = list[idx];
+      const cell = document.createElement('div');
+      cell.className = 'extraGridItem';
+
+      const thumbWrap = document.createElement('div');
+      thumbWrap.className = 'extraGridThumb';
+      const gImg = document.createElement('img');
+      gImg.onclick = ()=> openLightbox(item.path);
+      if(blobCache[item.path]) gImg.src = blobCache[item.path];
+      else{
+        ghGetFile(item.path).then(f=>{
+          if(!f) return;
+          const url = base64ToBlobUrl(f.content, guessMime(item.path));
+          blobCache[item.path] = url; gImg.src = url;
+        }).catch(()=>{});
+      }
+      thumbWrap.appendChild(gImg);
+      cell.appendChild(thumbWrap);
+
+      if(item.prompt){
+        const tagText = document.createElement('div');
+        tagText.className = 'extraGridTagText';
+        tagText.textContent = item.prompt;
+        tagText.onclick = ()=> copyText(item.prompt);
+        cell.appendChild(tagText);
+      }
+      grid.appendChild(cell);
     }
-    wrap.appendChild(row);
-  });
+    wrap.appendChild(grid);
+  }
 }
 async function openDetail(id){
   const img = db.images.find(i=>i.id===id);
   if(!img) return;
   currentDetailId = id;
   document.getElementById('detailTitle').textContent = img.title || '(제목 없음)';
-  document.getElementById('detailSubtitle').textContent = img.subtitle || '';
-  document.getElementById('detailSubtitle').classList.toggle('hidden', !img.subtitle);
+  renderSubtitleTags('detailSubtitleTags', img.subtitle);
 
   const ddayText = computeDdayText(img.ddayDate);
   document.getElementById('detailDday').textContent = ddayText;
