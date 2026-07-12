@@ -6,7 +6,7 @@
     "bgColor": "#94c2e0",
     "headerImagePath": "images/profile-header.jpg",
     "bgType": "pattern",
-    "bgPattern": "grid",
+    "bgPattern": "diagonal",
     "bgImagePath": "",
     "heartColor": "#c9184a"
   },
