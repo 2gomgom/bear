@@ -4,53 +4,5 @@
     "bio": "",
     "avatarPath": ""
   },
-  "images": [
-    {
-      "id": "mridp3rmjtf59",
-      "path": "images/mridp3rmjtf59.png",
-      "title": "염사하",
-      "subtitle": "페더",
-      "category": [],
-      "tags": {
-        "appearance": [
-          "1 boy",
-          "mature male",
-          "2::bishounen::",
-          "toned male",
-          "2.5::short light blue hair",
-          "gradient hair",
-          "blue eyes::",
-          "1.5::curly hair::",
-          "1.2::hair between eyes::",
-          "curtained bangs",
-          "narrowed eyes",
-          "jitome",
-          "= =",
-          "3::mole under mouth::",
-          "1.7:: a crown of thorns dark blue tattoo wrapped around only neck::",
-          "slender",
-          "pale skin",
-          "no head accessory"
-        ],
-        "outfit": [
-          "opened baggy distressed grey zip-up hoodie",
-          "scoop neck black bodysuit",
-          "high-cut leg",
-          "side cut-out",
-          "skintight",
-          "black clothing",
-          "tattoo on stomach",
-          "visible tattoo",
-          "ink on skin",
-          "loose-fitting black pants",
-          "black chunky boots"
-        ]
-      },
-      "memo": "코드네임 GEHENNA (게헤나)\nS->A급 불 센티넬 (강등)\n\n복부 문신 안나올 경우:\ngiant tattoo on stomach, tattoo on iliac crest, dark blue tattoo,",
-      "extraImages": [
-        "images/mridp3rmjtf59-extra-mridp65i0.jpg"
-      ],
-      "createdAt": "2026-07-12T22:42:10.642Z"
-    }
-  ]
+  "images": []
 }
