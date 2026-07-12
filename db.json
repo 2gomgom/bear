@@ -4,7 +4,11 @@
     "bio": "",
     "avatarPath": "",
     "bgColor": "#94c2e0",
-    "headerImagePath": "images/profile-header.jpg"
+    "headerImagePath": "images/profile-header.jpg",
+    "bgType": "pattern",
+    "bgPattern": "sky",
+    "bgImagePath": "",
+    "heartColor": "#c9184a"
   },
   "images": []
 }
