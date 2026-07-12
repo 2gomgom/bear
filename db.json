@@ -52,7 +52,11 @@
       "extraImages": [
         {
           "path": "images/mrie6bgztusaw-extra-mrie6dol0.jpg",
-          "prompt": "boy, solo, mature male, 2.3::bishounen::, toned male, parted hair, 1.7::gentle smile, soft smile::, pale skin, short hair, dark olive brown hair, dark ash brown hair, smooth hair, fine hair strands, short mullet, shaggy cut, turquoise blue eyes, eyelashes, -1.5::V-shaped eyebrows::, 2::tareme::,\n\n3::white buttoned military coat::, deep v-neck, 2::no inner::, visible collarbone, bare neck, white pants, white belt, white suit pants, black shoes, -2::cape::,"
+          "prompt": "페더(박요한)\n1 boy, mature male, 2.3::bishounen::, toned male, parted hair, 1.7::gentle smile, soft smile::, pale skin, short hair, dark olive brown hair, dark ash brown hair, smooth hair, fine hair strands, short mullet, shaggy cut, turquoise blue eyes, eyelashes, -1.5::V-shaped eyebrows::, 2::tareme::,\n\n3::white buttoned military coat::, deep v-neck, 2::no inner::, visible collarbone, bare neck, white pants, white belt, white suit pants, black shoes, -2::cape::,"
+        },
+        {
+          "path": "images/mrie6bgztusaw-extra-mrie7qax1.jpg",
+          "prompt": ""
         }
       ],
       "createdAt": "2026-07-12T22:55:33.779Z"
