@@ -65,11 +65,15 @@
   .moveBtn:disabled{ opacity:0.3; cursor:default; }
 
   .filterWrap{ padding:12px 16px 2px; }
-  .searchBar{ display:flex; align-items:center; gap:7px; padding:8px 12px; border-radius:8px; background:var(--bg-soft); border:1px solid var(--border); margin-bottom:12px; }
+  .searchRow{ display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+  .searchBar{ flex:1; min-width:0; display:flex; align-items:center; gap:7px; padding:9px 13px; border-radius:20px; background:var(--bg-soft); border:1px solid transparent; transition:background .15s, box-shadow .15s; }
+  .searchBar:focus-within{ background:var(--surface); box-shadow:0 0 0 1.5px var(--text-faint) inset; }
   .searchIcon{ color:var(--text-faint); font-size:14px; flex-shrink:0; }
-  .searchBar input{ flex:1; min-width:0; border:none; background:transparent; padding:0; font-size:13.5px; }
-  .searchBar input:focus{ border:none; }
+  .searchBar input{ flex:1; min-width:0; border:none; background:transparent; padding:0; font-size:13.5px; outline:none; }
+  .searchBar input:focus{ border:none; outline:none; }
   .searchClearBtn{ flex-shrink:0; width:20px; height:20px; border-radius:50%; border:none; background:var(--border); color:var(--text-muted); font-size:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .searchSortBtn{ flex-shrink:0; background:var(--bg-soft); border:1px solid transparent; }
+  .searchSortBtn:active{ background:var(--border); }
   .filterLabel{ font-size:11px; color:var(--text-faint); font-weight:600; letter-spacing:0.03em; margin-bottom:7px; text-transform:uppercase; }
   .filterScroll{ display:flex; gap:7px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none; }
   .filterScroll::-webkit-scrollbar{ display:none; }
@@ -87,6 +91,7 @@
   .card-thumb{ position:relative; aspect-ratio:1/1; background:var(--bg-soft); }
   .card-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
   .card-thumb .ph{ width:100%; height:100%; background:linear-gradient(100deg, var(--bg-soft) 30%, #efeeea 50%, var(--bg-soft) 70%); background-size:200% 100%; animation:shimmer 1.4s infinite; }
+  .card-thumb .ph.ph-error{ display:flex; align-items:center; justify-content:center; animation:none; background:var(--bg-soft); color:var(--text-faint); font-size:20px; cursor:pointer; }
   @keyframes shimmer{ 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
   .card-cap{ padding:9px 10px 10px; border-top:1px solid var(--border); }
   .card-title-row{ display:flex; align-items:baseline; gap:5px; margin-bottom:3px; }
@@ -246,16 +251,18 @@
           <div class="sub" id="profileBioMini">탭해서 프로필 편집</div>
         </div>
       </div>
-      <div class="icon-btn" id="reorderToggleBtn" onclick="toggleReorderMode()" title="갤러리 순서 변경">⇅</div>
       <div class="icon-btn" onclick="openSettings()">⚙</div>
     </div>
   </div>
 
   <div class="filterWrap" id="filterWrap">
-    <div class="searchBar">
-      <span class="searchIcon">⌕</span>
-      <input type="text" id="searchInput" placeholder="제목 검색" oninput="onSearchInput()">
-      <button class="searchClearBtn hidden" id="searchClearBtn" onclick="clearSearch()">✕</button>
+    <div class="searchRow">
+      <div class="searchBar">
+        <span class="searchIcon">⌕</span>
+        <input type="text" id="searchInput" placeholder="제목 검색" oninput="onSearchInput()">
+        <button class="searchClearBtn hidden" id="searchClearBtn" onclick="clearSearch()">✕</button>
+      </div>
+      <div class="icon-btn searchSortBtn" id="reorderToggleBtn" onclick="toggleReorderMode()" title="갤러리 순서 변경">⇅</div>
     </div>
     <div class="filterLabel">태그로 보기</div>
     <div id="filterScroll" class="filterScroll"></div>
@@ -633,10 +640,40 @@ async function ghGetImageUrl(path){
     return base64ToBlobUrl(file.content, guessMime(path));
   }
 }
-function loadImageAsync(path, applyFn){
+function delay(ms){ return new Promise(res=>setTimeout(res, ms)); }
+// 한꺼번에 너무 많은 이미지를 동시에 불러오면 (특히 새로고침 직후) 요청이 몰려 실패하기 쉬우므로
+// 동시 로딩 개수를 제한하는 간단한 큐
+const imageLoadQueue = [];
+let imageLoadActive = 0;
+const MAX_CONCURRENT_IMAGE_LOADS = 4;
+function runImageLoadQueue(){
+  while(imageLoadActive < MAX_CONCURRENT_IMAGE_LOADS && imageLoadQueue.length){
+    const task = imageLoadQueue.shift();
+    imageLoadActive++;
+    task().finally(()=>{ imageLoadActive--; runImageLoadQueue(); });
+  }
+}
+function queueImageLoad(task){
+  return new Promise((resolve)=>{
+    imageLoadQueue.push(()=> task().finally(resolve));
+    runImageLoadQueue();
+  });
+}
+async function ghGetImageUrlRetry(path, attempts=3){
+  let lastErr;
+  for(let i=0;i<attempts;i++){
+    try{ return await ghGetImageUrl(path); }
+    catch(e){ lastErr = e; if(i < attempts-1) await delay(500 * (i+1)); }
+  }
+  throw lastErr;
+}
+function loadImageAsync(path, applyFn, onError){
   if(!path) return;
   if(blobCache[path]){ applyFn(blobCache[path]); return; }
-  ghGetImageUrl(path).then(url=>{ blobCache[path] = url; applyFn(url); }).catch(err=>{ console.warn('이미지 로드 실패:', path, err); });
+  queueImageLoad(()=>ghGetImageUrlRetry(path)).then(url=>{ blobCache[path] = url; applyFn(url); }).catch(err=>{
+    console.warn('이미지 로드 실패:', path, err);
+    if(onError) onError(err);
+  });
 }
 function b64DecodeUnicode(str){
   return decodeURIComponent(atob(str.replace(/\n/g,'')).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''));
@@ -973,6 +1010,47 @@ function fileToBase64(file){
     reader.readAsDataURL(file);
   });
 }
+function loadImageFromFile(file){
+  return new Promise((resolve, reject)=>{
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = ()=>{ URL.revokeObjectURL(url); resolve(img); };
+    img.onerror = (e)=>{ URL.revokeObjectURL(url); reject(e); };
+    img.src = url;
+  });
+}
+// 용량이 큰 이미지는 업로드 전에 살짝 압축(리사이즈/재인코딩)해서 로딩 실패 확률을 줄인다.
+// 화질 저하를 최소화하기 위해 일정 용량 이하이거나 이미 해상도가 작은 png는 원본 그대로 둔다.
+async function prepareImageForUpload(file){
+  const SIZE_THRESHOLD = 1.2 * 1024 * 1024; // 1.2MB 이하면 그대로 업로드
+  const MAX_DIM = 1600; // 긴 변 기준 최대 해상도
+  const QUALITY = 0.88;
+  if(file.size <= SIZE_THRESHOLD){
+    return { base64: await fileToBase64(file), ext: safeExt(file.name) };
+  }
+  try{
+    const img = await loadImageFromFile(file);
+    const { width, height } = img;
+    const isPng = file.type === 'image/png';
+    if(width <= MAX_DIM && height <= MAX_DIM && isPng){
+      // 이미 작은 해상도의 png는 재압축해도 크게 줄지 않으므로 원본 유지
+      return { base64: await fileToBase64(file), ext: safeExt(file.name) };
+    }
+    const scale = Math.min(1, MAX_DIM / Math.max(width, height));
+    const outW = Math.max(1, Math.round(width * scale));
+    const outH = Math.max(1, Math.round(height * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = outW; canvas.height = outH;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, outW, outH);
+    const outMime = isPng ? 'image/png' : 'image/jpeg';
+    const dataUrl = canvas.toDataURL(outMime, QUALITY);
+    return { base64: dataUrl.split(',')[1], ext: isPng ? 'png' : 'jpg' };
+  }catch(e){
+    // 압축에 실패하면 원본 그대로 업로드
+    return { base64: await fileToBase64(file), ext: safeExt(file.name) };
+  }
+}
 function splitTags(str){ return str.split(',').map(s=>s.trim()).filter(Boolean); }
 function updateCombinedPreview(){
   const a = splitTags(document.getElementById('upAppearance').value);
@@ -1181,16 +1259,14 @@ async function submitEntry(){
       mainPath = existing.path;
       createdAt = existing.createdAt || createdAt;
       if(pendingUploadFile){
-        const b64 = await fileToBase64(pendingUploadFile);
-        const ext = safeExt(pendingUploadFile.name);
+        const {base64:b64, ext} = await prepareImageForUpload(pendingUploadFile);
         mainPath = `images/${id}-${Date.now().toString(36)}.${ext}`;
         await ghPutFile(mainPath, b64, `메인 이미지 교체: ${id}`);
         blobCache[mainPath] = URL.createObjectURL(pendingUploadFile);
       }
     }else{
       id = Date.now().toString(36) + Math.random().toString(36).slice(2,7);
-      const b64 = await fileToBase64(pendingUploadFile);
-      const ext = safeExt(pendingUploadFile.name);
+      const {base64:b64, ext} = await prepareImageForUpload(pendingUploadFile);
       mainPath = `images/${id}.${ext}`;
       await ghPutFile(mainPath, b64, `이미지 추가: ${id}`);
       blobCache[mainPath] = URL.createObjectURL(pendingUploadFile);
@@ -1202,8 +1278,7 @@ async function submitEntry(){
       if(item.type === 'existing'){
         finalExtra.push({path:item.path, prompt:item.prompt||''});
       }else{
-        const b64 = await fileToBase64(item.file);
-        const ext = safeExt(item.file.name);
+        const {base64:b64, ext} = await prepareImageForUpload(item.file);
         const p = `images/${id}-extra-${Date.now().toString(36)}${i}.${ext}`;
         await ghPutFile(p, b64, `연관 이미지 추가: ${id}`);
         blobCache[p] = item.previewUrl;
@@ -1450,16 +1525,29 @@ function renderGallery(){
 }
 async function loadCardImage(cardEl){
   const path = cardEl.dataset.path;
+  const thumb = cardEl.querySelector('.card-thumb');
   try{
-    const url = blobCache[path] || await ghGetImageUrl(path);
+    const url = blobCache[path] || await queueImageLoad(()=>ghGetImageUrlRetry(path));
     blobCache[path] = url;
-    const thumb = cardEl.querySelector('.card-thumb');
     const ph = thumb.querySelector('.ph');
     if(!ph) return;
     const imgEl = document.createElement('img');
     imgEl.src = url;
     thumb.replaceChild(imgEl, ph);
-  }catch(e){ /* 개별 썸네일 실패는 조용히 무시 */ }
+  }catch(e){
+    // 재시도까지 실패하면 탭해서 다시 시도할 수 있게 표시
+    const ph = thumb.querySelector('.ph');
+    if(!ph) return;
+    ph.classList.add('ph-error');
+    ph.textContent = '↻';
+    ph.onclick = (ev)=>{
+      ev.stopPropagation();
+      ph.classList.remove('ph-error');
+      ph.textContent = '';
+      delete blobCache[path];
+      loadCardImage(cardEl);
+    };
+  }
 }
 
 /* ============ 상세 보기 ============ */
