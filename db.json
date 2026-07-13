@@ -88,7 +88,7 @@
           "black chunky boots"
         ]
       },
-      "memo": "복부 문신 안 나올 경우:\ngiant tattoo on stomach, tattoo on iliac crest, dark blue tattoo,\n\n염사하 테마곡:\nhttps://youtu.be/jQDtrMhJJh4?si=-zigVdR5XZo7vXRv",
+      "memo": "복부 문신 안 나올 경우:\n1) giant tattoo on stomach, tattoo on iliac crest, dark blue tattoo,\n2) 2::giant tatoos on iliac crest, both sides::,\n\n염사하 테마곡:\nhttps://youtu.be/jQDtrMhJJh4?si=-zigVdR5XZo7vXRv",
       "profile": "Yeom Sa-ha\n코드네임: GEHENNA (게헤나)\n직급: S->A급 불 센티넬 (강등)\n국적: 한국\n나이: 26세\n키: 179cm",
       "bannerImagePath": "images/mrj2tg533opv2-banner-mrjc6k6w.jpg",
       "extraImages": [
@@ -154,8 +154,7 @@
         }
       ],
       "pinned": true,
-      "createdAt": "2026-07-13T10:25:23.703Z",
-      "categoryColor": "catPurple"
+      "createdAt": "2026-07-13T10:25:23.703Z"
     },
     {
       "id": "mrj7sfqyijh8u",
@@ -424,7 +423,8 @@
         }
       ],
       "pinned": true,
-      "createdAt": "2026-07-13T11:58:53.350Z"
+      "createdAt": "2026-07-13T11:58:53.350Z",
+      "categoryColor": "catPurple"
     },
     {
       "id": "mrjbiv6y1ouvq",
