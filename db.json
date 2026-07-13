@@ -20,6 +20,83 @@
   },
   "images": [
     {
+      "id": "mrjap4gin52dj",
+      "path": "images/mrjap4gin52dj.png",
+      "title": "리 란",
+      "subtitle": "케이든",
+      "ddayDate": "2026-05-30",
+      "heartColor": "#aa0000",
+      "catchphrase": "",
+      "catchphraseEnabled": false,
+      "catchphraseItalic": false,
+      "category": [
+        "CAVEDUCK"
+      ],
+      "categoryColors": {
+        "CAVEDUCK": "catGreen"
+      },
+      "tags": {
+        "appearance": [
+          "1 boy",
+          "male",
+          "1.8::brown hair",
+          "red hair",
+          "streaked hair",
+          "multicolored hair",
+          "medium hair",
+          "double buns",
+          "sidelocks",
+          "parted bangs::",
+          "narrow eyes",
+          "light brown eyes",
+          "fair skin",
+          "slim",
+          "slender",
+          "narrow waist",
+          "lean",
+          "ear piercings",
+          "lip piercing",
+          ";d"
+        ],
+        "outfit": [
+          "cropped red chinese track jacket",
+          "white dragon graphic on back",
+          "zip up front",
+          "cropped at ribcage",
+          "low rise black cargo trousers",
+          "loose fit",
+          "waistband sitting below hip bones",
+          "red satin sash tied loosely at hip",
+          "chunky white sneakers",
+          "layered chain necklace",
+          "stud earring"
+        ]
+      },
+      "memo": "기본 옷:\ncrop tracksuit,",
+      "profile": "Li Lan\n애칭: Lang-lang (랑랑)\n직급: 황화루의 수장\n국적: 중국\n나이: 28살\n키: 178cm",
+      "bannerImagePath": "images/mrjap4gin52dj-banner-mrjap7cw.jpg",
+      "extraImages": [
+        {
+          "path": "images/mrjap4gin52dj-extra-mrjap9030.png",
+          "prompt": "Caden Hill (케이든 힐)\n\n1 boy, male, 0.1::aged up::, 0.2::bishounen::, toned male, male dominated, 2::handsome::, 1.5::ash charcoal color very short hair::, 1.3::asymmetrical bangs::, hair behind ear, 1.5::mint eyes, aqua eyes::, 2::thin eyebrows::, 1.6::tsurime::, cat eye, aegyo sal, tall, 2::broad shoulders::, white skin, :), gentle smile, soft smile, no accessory ,\nnavy suit jacket, 1.2::slightly loose white collard shirt::, -2::tie::, formal uniform, neat appearance,"
+        },
+        {
+          "path": "images/mrjap4gin52dj-extra-mrjapb5p1.jpg",
+          "prompt": "♡판"
+        },
+        {
+          "path": "images/mrjap4gin52dj-extra-mrjapcvw2.jpg",
+          "prompt": "♡판"
+        },
+        {
+          "path": "images/mrjap4gin52dj-extra-mrjapeh63.jpg",
+          "prompt": "♡판"
+        }
+      ],
+      "pinned": false,
+      "createdAt": "2026-07-13T14:05:58.866Z"
+    },
+    {
       "id": "mrj2tg533opv2",
       "path": "images/mrj2tg533opv2-mrj36t58.png",
       "title": "염사하",
@@ -154,7 +231,8 @@
         }
       ],
       "pinned": true,
-      "createdAt": "2026-07-13T10:25:23.703Z"
+      "createdAt": "2026-07-13T10:25:23.703Z",
+      "categoryColor": "catPurple"
     },
     {
       "id": "mrj7sfqyijh8u",
@@ -278,7 +356,8 @@
         }
       ],
       "pinned": false,
-      "createdAt": "2026-07-13T12:44:34.618Z"
+      "createdAt": "2026-07-13T12:44:34.618Z",
+      "categoryColor": "catPurple"
     },
     {
       "id": "mrja6mkfpe0vq",
@@ -348,7 +427,8 @@
         }
       ],
       "pinned": false,
-      "createdAt": "2026-07-13T13:51:35.871Z"
+      "createdAt": "2026-07-13T13:51:35.871Z",
+      "categoryColor": "catPurple"
     },
     {
       "id": "mrj65okmmethk",
@@ -421,7 +501,8 @@
         }
       ],
       "pinned": false,
-      "createdAt": "2026-07-13T11:58:53.350Z"
+      "createdAt": "2026-07-13T11:58:53.350Z",
+      "categoryColor": "catPurple"
     }
   ]
 }
