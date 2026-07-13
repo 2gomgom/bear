@@ -55,6 +55,11 @@
   .icon-btn:active{ background:var(--bg-soft); }
 
   .filterWrap{ padding:12px 16px 2px; }
+  .searchBar{ display:flex; align-items:center; gap:7px; padding:8px 12px; border-radius:8px; background:var(--bg-soft); border:1px solid var(--border); margin-bottom:12px; }
+  .searchIcon{ color:var(--text-faint); font-size:14px; flex-shrink:0; }
+  .searchBar input{ flex:1; min-width:0; border:none; background:transparent; padding:0; font-size:13.5px; }
+  .searchBar input:focus{ border:none; }
+  .searchClearBtn{ flex-shrink:0; width:20px; height:20px; border-radius:50%; border:none; background:var(--border); color:var(--text-muted); font-size:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
   .filterLabel{ font-size:11px; color:var(--text-faint); font-weight:600; letter-spacing:0.03em; margin-bottom:7px; text-transform:uppercase; }
   .filterScroll{ display:flex; gap:7px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none; }
   .filterScroll::-webkit-scrollbar{ display:none; }
@@ -170,29 +175,29 @@
   .bg-pattern-diagonal{ background-color:#ffffff; background-image:repeating-linear-gradient(45deg, rgba(55,53,47,0.07) 0 2px, transparent 2px 14px); }
   .bg-pattern-blob{ background-color:#faf9f7; background-image:radial-gradient(circle at 18% 20%, rgba(211,229,239,0.65) 0%, transparent 45%), radial-gradient(circle at 82% 28%, rgba(232,222,238,0.6) 0%, transparent 45%), radial-gradient(circle at 50% 88%, rgba(219,237,219,0.6) 0%, transparent 45%); }
   .bg-pattern-sky{
-    background-color:#eaf5fb;
+    background-color:#e6f2fb;
     background-image:
-      linear-gradient(160deg, #dcedfa 0%, #eef8fd 45%, #ffffff 100%),
-      radial-gradient(circle at 12% 12%, rgba(255,255,255,0.65), transparent 40%),
+      linear-gradient(135deg, #bfe0f7 0%, #eaf6fd 50%, #ffffff 100%),
+      radial-gradient(circle at 12% 12%, rgba(255,255,255,0.7), transparent 40%),
       radial-gradient(circle at 88% 22%, rgba(255,255,255,0.55), transparent 45%),
       radial-gradient(circle at 30% 92%, rgba(255,255,255,0.45), transparent 50%);
   }
   .bg-pattern-feather{
-    background-color:#eaf5fb;
+    background-color:#eef0fb;
     background-image:
-      linear-gradient(165deg, rgba(210,233,249,0.95) 0%, rgba(240,249,253,0.95) 55%, rgba(255,255,255,0.95) 100%),
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='130' viewBox='0 0 90 130'><path d='M45 10 C25 26 18 52 27 78 C33 92 45 106 45 106 C45 106 57 92 63 78 C72 52 65 26 45 10 Z' fill='rgba(255,255,255,0.4)' stroke='rgba(120,172,208,0.5)' stroke-width='1.3'/><path d='M45 14 L45 102' stroke='rgba(120,172,208,0.4)' stroke-width='1'/><path d='M45 24 L31 36 M45 34 L28 48 M45 44 L26 60 M45 54 L26 72 M45 64 L28 84 M45 74 L31 92 M45 24 L59 36 M45 34 L62 48 M45 44 L64 60 M45 54 L64 72 M45 64 L62 84 M45 74 L59 92' stroke='rgba(120,172,208,0.35)' stroke-width='0.8'/></svg>");
-    background-size:auto, 110px 150px;
+      linear-gradient(205deg, rgba(206,218,247,0.95) 0%, rgba(240,240,253,0.95) 55%, rgba(255,255,255,0.95) 100%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='70' height='100' viewBox='0 0 70 100'><path d='M35 6 C18 20 12 42 20 66 C26 80 35 92 35 92 C35 92 44 80 50 66 C58 42 52 20 35 6 Z' fill='rgba(255,255,255,0.5)' stroke='rgba(100,120,190,0.6)' stroke-width='1.5'/><path d='M35 10 L35 86' stroke='rgba(100,120,190,0.5)' stroke-width='1.1'/><path d='M35 18 L23 28 M35 27 L20 38 M35 36 L18 48 M35 45 L18 58 M35 54 L20 68 M35 63 L23 76 M35 18 L47 28 M35 27 L50 38 M35 36 L52 48 M35 45 L52 58 M35 54 L50 68 M35 63 L47 76' stroke='rgba(100,120,190,0.42)' stroke-width='0.9'/></svg>");
+    background-size:auto, 78px 108px;
     background-position:center, 0 0;
     background-repeat:repeat, repeat;
   }
   .bg-pattern-wing{
-    background-color:#eef7fc;
+    background-color:#e9f5f6;
     background-image:
-      linear-gradient(145deg, #dceefb 0%, #f1f9fd 60%, #ffffff 100%),
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='110' viewBox='0 0 160 110'><path d='M10 95 C35 70 60 40 100 25 C120 18 140 15 150 15 C140 22 122 30 108 42 C130 38 145 38 155 42 C138 46 118 55 105 65 C122 62 135 64 143 70 C125 70 105 78 92 90 C70 100 40 105 10 95 Z' fill='none' stroke='rgba(110,165,205,0.4)' stroke-width='1.4'/></svg>");
-    background-size:auto, 220px 150px;
-    background-position:center, 0 0;
+      linear-gradient(60deg, #cdeaea 0%, #eef9f8 55%, #ffffff 100%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='150' viewBox='0 0 220 150'><path d='M14 130 C48 96 82 55 138 34 C165 24 192 20 205 20 C192 29 168 40 150 56 C178 51 198 51 211 56 C189 61 163 73 146 86 C168 82 185 85 195 93 C171 93 145 103 128 119 C98 133 58 139 14 130 Z' fill='none' stroke='rgba(70,150,150,0.45)' stroke-width='1.8'/><path d='M14 130 C48 96 82 55 138 34' stroke='rgba(70,150,150,0.3)' stroke-width='1'/></svg>");
+    background-size:auto, 300px 200px;
+    background-position:center, 20px 0;
     background-repeat:repeat, repeat;
   }
 
@@ -234,6 +239,11 @@
   </div>
 
   <div class="filterWrap">
+    <div class="searchBar">
+      <span class="searchIcon">⌕</span>
+      <input type="text" id="searchInput" placeholder="제목 검색" oninput="onSearchInput()">
+      <button class="searchClearBtn hidden" id="searchClearBtn" onclick="clearSearch()">✕</button>
+    </div>
     <div class="filterLabel">태그로 보기</div>
     <div id="filterScroll" class="filterScroll"></div>
     <div id="noCatHint" class="noCatHint hidden">'분류' 태그를 입력한 이미지가 있으면 여기에 필터가 나와요.</div>
@@ -333,6 +343,7 @@
             <span id="headerPickLabel">탭해서 커버 이미지 선택</span>
           </div>
           <input type="file" id="headerFileInput" accept="image/*" class="hidden" onchange="onHeaderFile(event)">
+          <button type="button" class="copyBtn hidden" id="headerRemoveBtn" style="margin-top:7px;" onclick="removeHeaderImage()">✕ 헤더 이미지 삭제</button>
         </div>
       </div>
     </div>
@@ -513,12 +524,14 @@ let settings = null;
 let db = null;
 let dbSha = null;
 let currentTagFilter = null;
+let currentSearchQuery = '';
 let currentDetailId = null;
 let isEditingId = null;
 let blobCache = {};
 let pendingUploadFile = null;
 let pendingProfileFile = null;
 let pendingHeaderFile = null;
+let pendingHeaderRemove = false;
 let pendingBgFile = null;
 let selectedBgType = 'color';
 let selectedBgPattern = 'dots';
@@ -586,6 +599,29 @@ async function ghDeleteFile(path, message, sha){
   const res = await ghRequest(path, {method:'DELETE', headers:{'Content-Type':'application/json'}, body});
   if(!res.ok){ const err = await res.json().catch(()=>({})); throw new Error(err.message || '삭제 실패'); }
   return res.json();
+}
+function rawContentUrl(path){
+  const branch = settings.branch || 'main';
+  return `https://raw.githubusercontent.com/${settings.owner}/${settings.repo}/${encodeURIComponent(branch)}/${encodePath(path)}`;
+}
+async function ghGetImageUrl(path){
+  // 1MB가 넘는 이미지는 Contents API가 base64를 안 내려주므로, raw.githubusercontent.com에서 직접 받아온다.
+  try{
+    const res = await fetch(rawContentUrl(path), { headers: { 'Authorization': `token ${settings.token}` }, cache:'no-store' });
+    if(!res.ok) throw new Error('raw ' + res.status);
+    const blob = await res.blob();
+    return URL.createObjectURL(blob);
+  }catch(e){
+    // 폴백: Contents API (1MB 이하 파일에만 동작)
+    const file = await ghGetFile(path);
+    if(!file || !file.content) throw new Error('이미지를 불러올 수 없어요');
+    return base64ToBlobUrl(file.content, guessMime(path));
+  }
+}
+function loadImageAsync(path, applyFn){
+  if(!path) return;
+  if(blobCache[path]){ applyFn(blobCache[path]); return; }
+  ghGetImageUrl(path).then(url=>{ blobCache[path] = url; applyFn(url); }).catch(err=>{ console.warn('이미지 로드 실패:', path, err); });
 }
 function b64DecodeUnicode(str){
   return decodeURIComponent(atob(str.replace(/\n/g,'')).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''));
@@ -686,9 +722,24 @@ function openProfile(){
   if(db?.profile?.avatarPath && blobCache[db.profile.avatarPath]){
     prev.src = blobCache[db.profile.avatarPath]; prev.classList.remove('hidden');
   }
+  pendingHeaderFile = null;
+  pendingHeaderRemove = false;
+  document.getElementById('headerFileInput').value = '';
   const headerPrev = document.getElementById('headerPreview');
-  if(db?.profile?.headerImagePath && blobCache[db.profile.headerImagePath]){
-    headerPrev.src = blobCache[db.profile.headerImagePath]; headerPrev.classList.remove('hidden');
+  const headerRemoveBtn = document.getElementById('headerRemoveBtn');
+  const headerPickLabel = document.getElementById('headerPickLabel');
+  if(db?.profile?.headerImagePath){
+    headerPickLabel.textContent = '탭해서 커버 이미지 선택';
+    headerRemoveBtn.classList.remove('hidden');
+    if(blobCache[db.profile.headerImagePath]){
+      headerPrev.src = blobCache[db.profile.headerImagePath]; headerPrev.classList.remove('hidden');
+    }else{
+      headerPrev.classList.add('hidden');
+    }
+  }else{
+    headerPrev.classList.add('hidden');
+    headerPickLabel.textContent = '탭해서 커버 이미지 선택';
+    headerRemoveBtn.classList.add('hidden');
   }
   const bgPrev = document.getElementById('bgPreview');
   bgPrev.classList.add('hidden');
@@ -748,6 +799,7 @@ function onProfileFile(e){
 function onHeaderFile(e){
   const file = e.target.files[0]; if(!file) return;
   pendingHeaderFile = file;
+  pendingHeaderRemove = false;
   const reader = new FileReader();
   reader.onload = ()=>{
     const prev = document.getElementById('headerPreview');
@@ -755,33 +807,54 @@ function onHeaderFile(e){
     document.getElementById('headerPickLabel').textContent = file.name;
   };
   reader.readAsDataURL(file);
+  document.getElementById('headerRemoveBtn').classList.remove('hidden');
+}
+function removeHeaderImage(){
+  pendingHeaderFile = null;
+  pendingHeaderRemove = true;
+  document.getElementById('headerFileInput').value = '';
+  document.getElementById('headerPreview').classList.add('hidden');
+  document.getElementById('headerPickLabel').textContent = '탭해서 커버 이미지 선택';
+  document.getElementById('headerRemoveBtn').classList.add('hidden');
+  toast('저장하면 헤더 이미지가 삭제돼요');
+}
+async function putProfileImage(file, path, message){
+  const b64 = await fileToBase64(file);
+  let sha;
+  try{ const existing = await ghGetFile(path); if(existing) sha = existing.sha; }catch(e){ /* 없으면 새로 생성 */ }
+  await ghPutFile(path, b64, message, sha);
 }
 async function saveProfile(){
   try{
     toast('저장 중...');
     if(pendingProfileFile){
-      const b64 = await fileToBase64(pendingProfileFile);
       const ext = safeExt(pendingProfileFile.name);
       const path = `images/profile-avatar.${ext}`;
-      await ghPutFile(path, b64, '프로필 이미지 업데이트');
+      await putProfileImage(pendingProfileFile, path, '프로필 이미지 업데이트');
       db.profile.avatarPath = path;
       blobCache[path] = URL.createObjectURL(pendingProfileFile);
       pendingProfileFile = null;
     }
     if(pendingHeaderFile){
-      const b64 = await fileToBase64(pendingHeaderFile);
       const ext = safeExt(pendingHeaderFile.name);
       const path = `images/profile-header.${ext}`;
-      await ghPutFile(path, b64, '헤더 이미지 업데이트');
+      await putProfileImage(pendingHeaderFile, path, '헤더 이미지 업데이트');
       db.profile.headerImagePath = path;
       blobCache[path] = URL.createObjectURL(pendingHeaderFile);
       pendingHeaderFile = null;
+    }else if(pendingHeaderRemove && db.profile.headerImagePath){
+      try{
+        const existing = await ghGetFile(db.profile.headerImagePath);
+        if(existing) await ghDeleteFile(db.profile.headerImagePath, '헤더 이미지 삭제', existing.sha);
+      }catch(e){ /* 저장소에 이미 없으면 무시하고 db 참조만 지움 */ }
+      delete blobCache[db.profile.headerImagePath];
+      db.profile.headerImagePath = '';
+      pendingHeaderRemove = false;
     }
     if(pendingBgFile){
-      const b64 = await fileToBase64(pendingBgFile);
       const ext = safeExt(pendingBgFile.name);
       const path = `images/profile-bg.${ext}`;
-      await ghPutFile(path, b64, '배경 이미지 업데이트');
+      await putProfileImage(pendingBgFile, path, '배경 이미지 업데이트');
       db.profile.bgImagePath = path;
       blobCache[path] = URL.createObjectURL(pendingBgFile);
       pendingBgFile = null;
@@ -806,14 +879,7 @@ function renderProfile(){
   const fallback = document.getElementById('avatarFallback');
   if(db.profile.avatarPath){
     fallback.classList.add('hidden'); img.classList.remove('hidden');
-    if(blobCache[db.profile.avatarPath]){ img.src = blobCache[db.profile.avatarPath]; }
-    else{
-      ghGetFile(db.profile.avatarPath).then(f=>{
-        if(!f) return;
-        const url = base64ToBlobUrl(f.content, guessMime(db.profile.avatarPath));
-        blobCache[db.profile.avatarPath] = url; img.src = url;
-      }).catch(()=>{});
-    }
+    loadImageAsync(db.profile.avatarPath, url=>{ img.src = url; });
   }
 }
 function applyTheme(){
@@ -839,15 +905,7 @@ function applyTheme(){
       body.style.backgroundAttachment = 'fixed';
       body.style.backgroundRepeat = 'no-repeat';
     };
-    if(blobCache[db.profile.bgImagePath]) applyImg(blobCache[db.profile.bgImagePath]);
-    else{
-      ghGetFile(db.profile.bgImagePath).then(f=>{
-        if(!f) return;
-        const url = base64ToBlobUrl(f.content, guessMime(db.profile.bgImagePath));
-        blobCache[db.profile.bgImagePath] = url;
-        applyImg(url);
-      }).catch(()=>{});
-    }
+    loadImageAsync(db.profile.bgImagePath, applyImg);
   }else{
     body.style.backgroundColor = db.profile.bgColor || '#ffffff';
   }
@@ -857,16 +915,7 @@ function applyTheme(){
   if(db.profile.headerImagePath){
     cover.classList.remove('hidden');
     profileBar.classList.add('floating');
-    if(blobCache[db.profile.headerImagePath]){
-      cover.style.backgroundImage = `url(${blobCache[db.profile.headerImagePath]})`;
-    }else{
-      ghGetFile(db.profile.headerImagePath).then(f=>{
-        if(!f) return;
-        const url = base64ToBlobUrl(f.content, guessMime(db.profile.headerImagePath));
-        blobCache[db.profile.headerImagePath] = url;
-        cover.style.backgroundImage = `url(${url})`;
-      }).catch(()=>{});
-    }
+    loadImageAsync(db.profile.headerImagePath, url=>{ cover.style.backgroundImage = `url(${url})`; });
   }else{
     cover.classList.add('hidden');
     cover.style.backgroundImage = '';
@@ -989,12 +1038,7 @@ function onExtraFiles(e){
 }
 function loadExtraThumbInto(item, imgEl){
   if(item.type === 'pending'){ imgEl.src = item.previewUrl; return; }
-  if(blobCache[item.path]){ imgEl.src = blobCache[item.path]; return; }
-  ghGetFile(item.path).then(f=>{
-    if(!f) return;
-    const url = base64ToBlobUrl(f.content, guessMime(item.path));
-    blobCache[item.path] = url; imgEl.src = url;
-  }).catch(()=>{});
+  loadImageAsync(item.path, url=>{ imgEl.src = url; });
 }
 function renderExtraImagesEditor(){
   const wrap = document.getElementById('extraImagesList');
@@ -1157,6 +1201,19 @@ async function submitEntry(){
   finally{ btn.disabled = false; isEditingId = null; }
 }
 
+/* ============ 제목 검색 ============ */
+function onSearchInput(){
+  currentSearchQuery = document.getElementById('searchInput').value.trim();
+  document.getElementById('searchClearBtn').classList.toggle('hidden', !currentSearchQuery);
+  renderGallery();
+}
+function clearSearch(){
+  currentSearchQuery = '';
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClearBtn').classList.add('hidden');
+  renderGallery();
+}
+
 /* ============ 필터 (분류 태그 전용) ============ */
 function allCategoryTags(){
   const set = new Set();
@@ -1200,7 +1257,20 @@ function renderGallery(){
   grid.innerHTML = '';
   let list = db.images;
   if(currentTagFilter) list = list.filter(img => (img.category||[]).includes(currentTagFilter));
-  document.getElementById('emptyHint').classList.toggle('hidden', db.images.length>0);
+  if(currentSearchQuery){
+    const q = currentSearchQuery.toLowerCase();
+    list = list.filter(img => (img.title||'').toLowerCase().includes(q));
+  }
+  const emptyHint = document.getElementById('emptyHint');
+  if(db.images.length===0){
+    emptyHint.innerHTML = '아직 백업된 이미지가 없어요.<br>오른쪽 아래 버튼으로 첫 이미지를 추가해보세요.';
+    emptyHint.classList.remove('hidden');
+  }else if(list.length===0){
+    emptyHint.innerHTML = '검색/필터 결과가 없어요.';
+    emptyHint.classList.remove('hidden');
+  }else{
+    emptyHint.classList.add('hidden');
+  }
 
   if(observer) observer.disconnect();
   observer = new IntersectionObserver((entries)=>{
@@ -1275,15 +1345,11 @@ function renderGallery(){
 async function loadCardImage(cardEl){
   const path = cardEl.dataset.path;
   try{
-    let url = blobCache[path];
-    if(!url){
-      const file = await ghGetFile(path);
-      if(!file) return;
-      url = base64ToBlobUrl(file.content, guessMime(path));
-      blobCache[path] = url;
-    }
+    const url = blobCache[path] || await ghGetImageUrl(path);
+    blobCache[path] = url;
     const thumb = cardEl.querySelector('.card-thumb');
     const ph = thumb.querySelector('.ph');
+    if(!ph) return;
     const imgEl = document.createElement('img');
     imgEl.src = url;
     thumb.replaceChild(imgEl, ph);
@@ -1304,14 +1370,7 @@ function renderTagPills(containerId, tags, catClass){
 }
 function openLightbox(path){
   const img = document.getElementById('lightboxImg');
-  if(blobCache[path]) img.src = blobCache[path];
-  else{
-    ghGetFile(path).then(f=>{
-      if(!f) return;
-      const url = base64ToBlobUrl(f.content, guessMime(path));
-      blobCache[path] = url; img.src = url;
-    });
-  }
+  loadImageAsync(path, url=>{ img.src = url; });
   document.getElementById('lightboxModal').classList.add('show');
 }
 function renderDetailExtraImages(list){
@@ -1333,14 +1392,7 @@ function renderDetailExtraImages(list){
   const thumb = document.createElement('img');
   thumb.style.cssText = 'width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex-shrink:0;cursor:pointer;background:var(--bg-soft);';
   thumb.onclick = ()=> openLightbox(first.path);
-  if(blobCache[first.path]) thumb.src = blobCache[first.path];
-  else{
-    ghGetFile(first.path).then(f=>{
-      if(!f) return;
-      const url = base64ToBlobUrl(f.content, guessMime(first.path));
-      blobCache[first.path] = url; thumb.src = url;
-    }).catch(()=>{});
-  }
+  loadImageAsync(first.path, url=>{ thumb.src = url; });
   row.appendChild(thumb);
   if(first.prompt){
     const right = document.createElement('div');
@@ -1376,14 +1428,7 @@ function renderDetailExtraImages(list){
       thumbWrap.className = 'extraGridThumb';
       const gImg = document.createElement('img');
       gImg.onclick = ()=> openLightbox(item.path);
-      if(blobCache[item.path]) gImg.src = blobCache[item.path];
-      else{
-        ghGetFile(item.path).then(f=>{
-          if(!f) return;
-          const url = base64ToBlobUrl(f.content, guessMime(item.path));
-          blobCache[item.path] = url; gImg.src = url;
-        }).catch(()=>{});
-      }
+      loadImageAsync(item.path, url=>{ gImg.src = url; });
       thumbWrap.appendChild(gImg);
       cell.appendChild(thumbWrap);
 
@@ -1415,13 +1460,7 @@ async function openDetail(id){
 
   const detailImg = document.getElementById('detailImg');
   detailImg.src = blobCache[img.path] || '';
-  if(!blobCache[img.path]){
-    ghGetFile(img.path).then(f=>{
-      if(!f) return;
-      const url = base64ToBlobUrl(f.content, guessMime(img.path));
-      blobCache[img.path] = url; detailImg.src = url;
-    });
-  }
+  loadImageAsync(img.path, url=>{ detailImg.src = url; });
   renderTagPills('detailCategory', img.category || [], 'category');
   renderTagPills('detailAppearance', img.tags.appearance, 'appearance');
   renderTagPills('detailOutfit', img.tags.outfit, 'outfit');
