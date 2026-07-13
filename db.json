@@ -20,71 +20,6 @@
   },
   "images": [
     {
-      "id": "mrj65okmmethk",
-      "path": "images/mrj65okmmethk-mrj6swgx.png",
-      "title": "스카라브",
-      "subtitle": "모스",
-      "ddayDate": "2026-07-11",
-      "heartColor": "#f5e27a",
-      "category": [
-        "CRACK",
-        "THEMIS"
-      ],
-      "tags": {
-        "appearance": [
-          "1 boy",
-          "mature male",
-          "2::bishounen::",
-          "dark skin",
-          "toned male",
-          "dark skin",
-          "cleopatra hairstyle",
-          "egyptian bob cut",
-          "chin-length bob",
-          "blunt bangs",
-          "sleek hair",
-          "symmetrical haircut",
-          "glossy black hair",
-          "amber eyes",
-          "cat-like eyes",
-          "= =",
-          "slender",
-          "navel piercing",
-          "black nail",
-          "earrings",
-          "layered gold chain necklaces",
-          "gold rings",
-          "bicep gold rings",
-          "no hair accessories",
-          "eye of horus makeup",
-          "2::glowing golden eyes::",
-          "2::luminous amber eyes::",
-          "golden eye glow",
-          "radiant amber irises",
-          "rim lighting"
-        ],
-        "outfit": [
-          "cropped black suit jacket",
-          "deep v-neck",
-          "white crop turtleneck",
-          "high-waisted tailored trousers",
-          "gold belt",
-          "dress shoes",
-          "luxury menswear"
-        ]
-      },
-      "memo": "#D4AF37 (Royal Gold)\n#D08A1A (Amber)",
-      "profile": "분류: 특급 이형\n현현 방식: 본체 직접 현현 불가 ㅡ 자율분신 '아크나텐' 으로 현세 개입 (스카라브=아크나텐)\n신격/계보: 아툼-라 (엔네아드) ㅡ 잊혀진 태양신\n기원: 메소포타미아-이집트 혼합 신화권, 엔네아드 체계 내 최상위 창조 신격\n\n자율분신(코드네임): AKHENATEN (아크나텐)\n나이: 불명\n키: 180cm",
-      "bannerImagePath": "images/mrj65okmmethk-banner-mrj6syok.png",
-      "extraImages": [
-        {
-          "path": "images/mrj65okmmethk-extra-mrj6xtxa0.webp",
-          "prompt": "MOTH (백도담)\n\n1 boy, aged up, 0.3::mature male::, white skin, slender, 1.7::short hair, mullet, hair intakes::, white hair, long bangs, hair over eyes, eyes visible through hair, wavy hair, hair between eyes, Melting White Halo with blood, 1.5::red pupils, light gray eyes::, colored eyelashes, empty eyes, tareme, bags under eyes,\n\n1.2::torn clothes, Many blood stains on the clothes::, white oversized straitjacket, crop jacket, sleeves past wrists, popped collar, white straps on jacket,\nbandage on face, gauze on cheek, white pants,\n\n: 남캐짭짭이님 공식 프롬에서 옷 크롭으로 변경"
-        }
-      ],
-      "createdAt": "2026-07-13T11:58:53.350Z"
-    },
-    {
       "id": "mrj2tg533opv2",
       "path": "images/mrj2tg533opv2-mrj36t58.png",
       "title": "염사하",
@@ -210,7 +145,74 @@
           "prompt": "©만두걸"
         }
       ],
-      "createdAt": "2026-07-13T10:25:23.703Z"
+      "createdAt": "2026-07-13T10:25:23.703Z",
+      "pinned": false
+    },
+    {
+      "id": "mrj65okmmethk",
+      "path": "images/mrj65okmmethk-mrj6swgx.png",
+      "title": "스카라브",
+      "subtitle": "모스",
+      "ddayDate": "2026-07-11",
+      "heartColor": "#f5e27a",
+      "category": [
+        "CRACK",
+        "THEMIS"
+      ],
+      "tags": {
+        "appearance": [
+          "1 boy",
+          "mature male",
+          "2::bishounen::",
+          "dark skin",
+          "toned male",
+          "dark skin",
+          "cleopatra hairstyle",
+          "egyptian bob cut",
+          "chin-length bob",
+          "blunt bangs",
+          "sleek hair",
+          "symmetrical haircut",
+          "glossy black hair",
+          "amber eyes",
+          "cat-like eyes",
+          "= =",
+          "slender",
+          "navel piercing",
+          "black nail",
+          "earrings",
+          "layered gold chain necklaces",
+          "gold rings",
+          "bicep gold rings",
+          "no hair accessories",
+          "eye of horus makeup",
+          "2::glowing golden eyes::",
+          "2::luminous amber eyes::",
+          "golden eye glow",
+          "radiant amber irises",
+          "rim lighting"
+        ],
+        "outfit": [
+          "cropped black suit jacket",
+          "deep v-neck",
+          "white crop turtleneck",
+          "high-waisted tailored trousers",
+          "gold belt",
+          "dress shoes",
+          "luxury menswear"
+        ]
+      },
+      "memo": "#D4AF37 (Royal Gold)\n#D08A1A (Amber)",
+      "profile": "분류: 특급 이형\n현현 방식: 본체 직접 현현 불가 ㅡ 자율분신 '아크나텐' 으로 현세 개입 (스카라브=아크나텐)\n신격/계보: 아툼-라 (엔네아드) ㅡ 잊혀진 태양신\n기원: 메소포타미아-이집트 혼합 신화권, 엔네아드 체계 내 최상위 창조 신격\n\n자율분신(코드네임): AKHENATEN (아크나텐)\n나이: 불명\n키: 180cm",
+      "bannerImagePath": "images/mrj65okmmethk-banner-mrj6syok.png",
+      "extraImages": [
+        {
+          "path": "images/mrj65okmmethk-extra-mrj6xtxa0.webp",
+          "prompt": "MOTH (백도담)\n\n1 boy, aged up, 0.3::mature male::, white skin, slender, 1.7::short hair, mullet, hair intakes::, white hair, long bangs, hair over eyes, eyes visible through hair, wavy hair, hair between eyes, Melting White Halo with blood, 1.5::red pupils, light gray eyes::, colored eyelashes, empty eyes, tareme, bags under eyes,\n\n1.2::torn clothes, Many blood stains on the clothes::, white oversized straitjacket, crop jacket, sleeves past wrists, popped collar, white straps on jacket,\nbandage on face, gauze on cheek, white pants,\n\n: 남캐짭짭이님 공식 프롬에서 옷 크롭으로 변경"
+        }
+      ],
+      "createdAt": "2026-07-13T11:58:53.350Z",
+      "pinned": false
     }
   ]
 }
