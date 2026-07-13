@@ -92,6 +92,8 @@
   .card-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
   .card-thumb .ph{ width:100%; height:100%; background:linear-gradient(100deg, var(--bg-soft) 30%, #efeeea 50%, var(--bg-soft) 70%); background-size:200% 100%; animation:shimmer 1.4s infinite; }
   .card-thumb .ph.ph-error{ display:flex; align-items:center; justify-content:center; animation:none; background:var(--bg-soft); color:var(--text-faint); font-size:20px; cursor:pointer; }
+  .imgLoadError{ width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; background:var(--bg-soft); color:var(--text-faint); font-size:10px; text-align:center; padding:6px; cursor:pointer; line-height:1.3; word-break:break-all; }
+  .imgLoadError .ile-icon{ font-size:18px; }
   @keyframes shimmer{ 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
   .card-cap{ padding:9px 10px 10px; border-top:1px solid var(--border); }
   .card-title-row{ display:flex; align-items:baseline; gap:5px; margin-bottom:3px; }
@@ -706,6 +708,31 @@ function loadImageAsync(path, applyFn, onError){
     if(onError) onError(err);
   });
 }
+function makeImageErrorBox(err, onRetry){
+  const box = document.createElement('div');
+  box.className = 'imgLoadError';
+  const icon = document.createElement('div');
+  icon.className = 'ile-icon';
+  icon.textContent = '↻';
+  const msg = document.createElement('div');
+  msg.className = 'ile-msg';
+  msg.textContent = (err && err.message) ? err.message : '알 수 없는 오류';
+  box.appendChild(icon); box.appendChild(msg);
+  box.onclick = (ev)=>{ ev.stopPropagation(); onRetry(); };
+  return box;
+}
+// holderEl 안에 이미지를 로드해서 넣고, 실패하면 에러 박스로 교체(탭하면 재시도)한다.
+function loadImageIntoHolder(path, holderEl, imgEl){
+  loadImageAsync(path, url=>{ imgEl.src = url; }, err=>{
+    holderEl.innerHTML = '';
+    holderEl.appendChild(makeImageErrorBox(err, ()=>{
+      delete blobCache[path];
+      holderEl.innerHTML = '';
+      holderEl.appendChild(imgEl);
+      loadImageIntoHolder(path, holderEl, imgEl);
+    }));
+  });
+}
 function b64DecodeUnicode(str){
   return decodeURIComponent(atob(str.replace(/\n/g,'')).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''));
 }
@@ -962,7 +989,10 @@ function renderProfile(){
   const fallback = document.getElementById('avatarFallback');
   if(db.profile.avatarPath){
     fallback.classList.add('hidden'); img.classList.remove('hidden');
-    loadImageAsync(db.profile.avatarPath, url=>{ img.src = url; });
+    loadImageAsync(db.profile.avatarPath, url=>{ img.src = url; }, err=>{
+      img.classList.add('hidden'); fallback.classList.remove('hidden');
+      fallback.title = err && err.message || '';
+    });
   }
 }
 function applyTheme(){
@@ -1571,18 +1601,14 @@ async function loadCardImage(cardEl){
       rateLimitWarned = true;
       toast('요청이 일시적으로 많아요. 잠시 후 새로고침해주세요');
     }
-    // 재시도까지 실패하면 탭해서 다시 시도할 수 있게 표시
     const ph = thumb.querySelector('.ph');
     if(!ph) return;
-    ph.classList.add('ph-error');
-    ph.textContent = '↻';
-    ph.onclick = (ev)=>{
-      ev.stopPropagation();
-      ph.classList.remove('ph-error');
-      ph.textContent = '';
+    const errBox = makeImageErrorBox(e, (ev)=>{
+      errBox.replaceWith((()=>{ const p=document.createElement('div'); p.className='ph'; return p; })());
       delete blobCache[path];
       loadCardImage(cardEl);
-    };
+    });
+    thumb.replaceChild(errBox, ph);
   }
 }
 
@@ -1622,8 +1648,11 @@ function renderDetailExtraImages(list){
   const thumb = document.createElement('img');
   thumb.style.cssText = 'width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex-shrink:0;cursor:pointer;background:var(--bg-soft);';
   thumb.onclick = ()=> openLightbox(first.path);
-  loadImageAsync(first.path, url=>{ thumb.src = url; });
-  row.appendChild(thumb);
+  const thumbHolder = document.createElement('div');
+  thumbHolder.style.cssText = 'width:64px;height:64px;flex-shrink:0;border-radius:8px;overflow:hidden;';
+  thumbHolder.appendChild(thumb);
+  loadImageIntoHolder(first.path, thumbHolder, thumb);
+  row.appendChild(thumbHolder);
   if(first.prompt){
     const right = document.createElement('div');
     right.style.cssText = 'flex:1;min-width:0;';
@@ -1658,7 +1687,7 @@ function renderDetailExtraImages(list){
       thumbWrap.className = 'extraGridThumb';
       const gImg = document.createElement('img');
       gImg.onclick = ()=> openLightbox(item.path);
-      loadImageAsync(item.path, url=>{ gImg.src = url; });
+      loadImageIntoHolder(item.path, thumbWrap, gImg);
       thumbWrap.appendChild(gImg);
       cell.appendChild(thumbWrap);
 
@@ -1689,8 +1718,11 @@ async function openDetail(id){
   document.getElementById('detailMemoHeartIcon').style.color = entryHeartColor;
 
   const detailImg = document.getElementById('detailImg');
-  detailImg.src = blobCache[img.path] || '';
-  loadImageAsync(img.path, url=>{ detailImg.src = url; });
+  const detailImgWrap = document.getElementById('detailImgWrap');
+  detailImgWrap.innerHTML = '';
+  detailImgWrap.appendChild(detailImg);
+  if(blobCache[img.path]) detailImg.src = blobCache[img.path];
+  loadImageIntoHolder(img.path, detailImgWrap, detailImg);
   renderTagPills('detailCategory', img.category || [], 'category');
   renderTagPills('detailAppearance', img.tags.appearance, 'appearance');
   renderTagPills('detailOutfit', img.tags.outfit, 'outfit');
