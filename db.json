@@ -20,204 +20,6 @@
   },
   "images": [
     {
-      "id": "mrjbvxh8457qz",
-      "path": "images/mrjbvxh8457qz.png",
-      "title": "마린",
-      "subtitle": "",
-      "ddayDate": "",
-      "heartColor": "#c9184a",
-      "catchphrase": "",
-      "catchphraseEnabled": false,
-      "catchphraseItalic": false,
-      "category": [],
-      "categoryColors": {},
-      "tags": {
-        "appearance": [
-          "1boy",
-          "male focus",
-          "beautiful male",
-          "slender",
-          "slim",
-          "pale skin",
-          "cerulean blue gradient markings on skin",
-          "iridescent blue and white bicolor skin",
-          "silver white hair",
-          "long hair",
-          "wavy",
-          "twintails",
-          "full-bangs",
-          "blue eyes",
-          "almond-shaped eyes",
-          "tsurime",
-          "sharp elegant face"
-        ],
-        "outfit": [
-          "white sailor uniform",
-          "short-sleeve",
-          "short white pants",
-          "fluorescent blue accent",
-          "sailor collar",
-          "sailor hat",
-          "white loafers",
-          "white knee socks"
-        ]
-      },
-      "memo": "",
-      "profile": "M4R1N\n직급: 외교부 수장\n키: 174cm",
-      "bannerImagePath": "images/mrjbvxh8457qz-banner-mrjbw16y.png",
-      "extraImages": [],
-      "pinned": false,
-      "createdAt": "2026-07-13T14:39:16.028Z"
-    },
-    {
-      "id": "mrjbiv6y1ouvq",
-      "path": "images/mrjbiv6y1ouvq.png",
-      "title": "네페르템",
-      "subtitle": "",
-      "ddayDate": "",
-      "heartColor": "#c9184a",
-      "catchphrase": "",
-      "catchphraseEnabled": false,
-      "catchphraseItalic": false,
-      "category": [],
-      "categoryColors": {},
-      "tags": {
-        "appearance": [
-          "1 boy",
-          "mature male",
-          "2::bishounen::",
-          "dark skin",
-          "toned male",
-          "2::pink eyes::",
-          "eye of horus makeup",
-          "2::pink hair + black hair",
-          "gradient hair",
-          "long hair",
-          "straight hair::",
-          "hair bow bun at back of head",
-          "hair folded into bow shape at occipital",
-          "3::own hair shaped into large bow at back of head::",
-          "hair looped into ribbon shape at nape",
-          "hair bow hairstyle at back",
-          "3::blue flower-shaped pupils::",
-          "slender",
-          "narrow waist",
-          "= =",
-          "many moles under eye",
-          "navel piercing",
-          "pink nail",
-          "blue lotus earrings",
-          "layered gold chain necklaces",
-          "gold rings",
-          "(bicep tattoo:1.4)",
-          "arm black and blue water lily tattoo",
-          "ancient egypt",
-          "nefertem motif"
-        ],
-        "outfit": [
-          "white tightly cropped tactical vest",
-          "high collar",
-          "sleeveless",
-          "midriff",
-          "tactical harness",
-          "combat suspenders",
-          "white cargo pants",
-          "utility belt",
-          "thigh straps",
-          "white combat gloves",
-          "gold trim",
-          "gold chains",
-          "blue lotus emblem",
-          "lapis lazuli accessories",
-          "white boots"
-        ]
-      },
-      "memo": "",
-      "profile": "Nefertem\n국적: 이집트\n나이: 4725세 (기원전 2700년경)\n키: 177cm",
-      "bannerImagePath": "",
-      "extraImages": [],
-      "pinned": false,
-      "createdAt": "2026-07-13T14:29:06.538Z"
-    },
-    {
-      "id": "mrjap4gin52dj",
-      "path": "images/mrjap4gin52dj.png",
-      "title": "리 란",
-      "subtitle": "케이든",
-      "ddayDate": "2026-05-30",
-      "heartColor": "#aa0000",
-      "catchphrase": "",
-      "catchphraseEnabled": false,
-      "catchphraseItalic": false,
-      "category": [
-        "CAVEDUCK"
-      ],
-      "categoryColors": {
-        "CAVEDUCK": "catGreen"
-      },
-      "tags": {
-        "appearance": [
-          "1 boy",
-          "male",
-          "1.8::brown hair",
-          "red hair",
-          "streaked hair",
-          "multicolored hair",
-          "medium hair",
-          "double buns",
-          "sidelocks",
-          "parted bangs::",
-          "narrow eyes",
-          "light brown eyes",
-          "fair skin",
-          "slim",
-          "slender",
-          "narrow waist",
-          "lean",
-          "ear piercings",
-          "lip piercing",
-          ";d"
-        ],
-        "outfit": [
-          "cropped red chinese track jacket",
-          "white dragon graphic on back",
-          "zip up front",
-          "cropped at ribcage",
-          "low rise black cargo trousers",
-          "loose fit",
-          "waistband sitting below hip bones",
-          "red satin sash tied loosely at hip",
-          "chunky white sneakers",
-          "layered chain necklace",
-          "stud earring"
-        ]
-      },
-      "memo": "#AA0000 (Dark Red)\n기본 옷:\ncrop tracksuit,",
-      "profile": "Li Lan\n애칭: Lang-lang (랑랑)\n직급: 황화루의 수장\n국적: 중국\n나이: 28살\n키: 178cm",
-      "bannerImagePath": "images/mrjap4gin52dj-banner-mrjap7cw.jpg",
-      "extraImages": [
-        {
-          "path": "images/mrjap4gin52dj-extra-mrjap9030.png",
-          "prompt": "Caden Hill (케이든 힐)\n\n1 boy, male, 0.1::aged up::, 0.2::bishounen::, toned male, male dominated, 2::handsome::, 1.5::ash charcoal color very short hair::, 1.3::asymmetrical bangs::, hair behind ear, 1.5::mint eyes, aqua eyes::, 2::thin eyebrows::, 1.6::tsurime::, cat eye, aegyo sal, tall, 2::broad shoulders::, white skin, :), gentle smile, soft smile, no accessory ,\nnavy suit jacket, 1.2::slightly loose white collard shirt::, -2::tie::, formal uniform, neat appearance,"
-        },
-        {
-          "path": "images/mrjap4gin52dj-extra-mrjapb5p1.jpg",
-          "prompt": "♡판"
-        },
-        {
-          "path": "images/mrjap4gin52dj-extra-mrjapcvw2.jpg",
-          "prompt": "♡판"
-        },
-        {
-          "path": "images/mrjap4gin52dj-extra-mrjapeh63.jpg",
-          "prompt": "♡판"
-        }
-      ],
-      "pinned": false,
-      "createdAt": "2026-07-13T14:05:58.866Z",
-      "categoryColor": "catPurple"
-    },
-    {
       "id": "mrj2tg533opv2",
       "path": "images/mrj2tg533opv2-mrj36t58.png",
       "title": "염사하",
@@ -622,6 +424,204 @@
       ],
       "pinned": true,
       "createdAt": "2026-07-13T11:58:53.350Z"
+    },
+    {
+      "id": "mrjbiv6y1ouvq",
+      "path": "images/mrjbiv6y1ouvq.png",
+      "title": "네페르템",
+      "subtitle": "",
+      "ddayDate": "",
+      "heartColor": "#c9184a",
+      "catchphrase": "",
+      "catchphraseEnabled": false,
+      "catchphraseItalic": false,
+      "category": [],
+      "categoryColors": {},
+      "tags": {
+        "appearance": [
+          "1 boy",
+          "mature male",
+          "2::bishounen::",
+          "dark skin",
+          "toned male",
+          "2::pink eyes::",
+          "eye of horus makeup",
+          "2::pink hair + black hair",
+          "gradient hair",
+          "long hair",
+          "straight hair::",
+          "hair bow bun at back of head",
+          "hair folded into bow shape at occipital",
+          "3::own hair shaped into large bow at back of head::",
+          "hair looped into ribbon shape at nape",
+          "hair bow hairstyle at back",
+          "3::blue flower-shaped pupils::",
+          "slender",
+          "narrow waist",
+          "= =",
+          "many moles under eye",
+          "navel piercing",
+          "pink nail",
+          "blue lotus earrings",
+          "layered gold chain necklaces",
+          "gold rings",
+          "(bicep tattoo:1.4)",
+          "arm black and blue water lily tattoo",
+          "ancient egypt",
+          "nefertem motif"
+        ],
+        "outfit": [
+          "white tightly cropped tactical vest",
+          "high collar",
+          "sleeveless",
+          "midriff",
+          "tactical harness",
+          "combat suspenders",
+          "white cargo pants",
+          "utility belt",
+          "thigh straps",
+          "white combat gloves",
+          "gold trim",
+          "gold chains",
+          "blue lotus emblem",
+          "lapis lazuli accessories",
+          "white boots"
+        ]
+      },
+      "memo": "",
+      "profile": "Nefertem\n국적: 이집트\n나이: 4725세 (기원전 2700년경)\n키: 177cm",
+      "bannerImagePath": "",
+      "extraImages": [],
+      "pinned": false,
+      "createdAt": "2026-07-13T14:29:06.538Z"
+    },
+    {
+      "id": "mrjbvxh8457qz",
+      "path": "images/mrjbvxh8457qz.png",
+      "title": "마린",
+      "subtitle": "",
+      "ddayDate": "",
+      "heartColor": "#c9184a",
+      "catchphrase": "",
+      "catchphraseEnabled": false,
+      "catchphraseItalic": false,
+      "category": [],
+      "categoryColors": {},
+      "tags": {
+        "appearance": [
+          "1boy",
+          "male focus",
+          "beautiful male",
+          "slender",
+          "slim",
+          "pale skin",
+          "cerulean blue gradient markings on skin",
+          "iridescent blue and white bicolor skin",
+          "silver white hair",
+          "long hair",
+          "wavy",
+          "twintails",
+          "full-bangs",
+          "blue eyes",
+          "almond-shaped eyes",
+          "tsurime",
+          "sharp elegant face"
+        ],
+        "outfit": [
+          "white sailor uniform",
+          "short-sleeve",
+          "short white pants",
+          "fluorescent blue accent",
+          "sailor collar",
+          "sailor hat",
+          "white loafers",
+          "white knee socks"
+        ]
+      },
+      "memo": "",
+      "profile": "M4R1N\n직급: 외교부 수장\n키: 174cm",
+      "bannerImagePath": "images/mrjbvxh8457qz-banner-mrjbw16y.png",
+      "extraImages": [],
+      "pinned": false,
+      "createdAt": "2026-07-13T14:39:16.028Z"
+    },
+    {
+      "id": "mrjap4gin52dj",
+      "path": "images/mrjap4gin52dj.png",
+      "title": "리 란",
+      "subtitle": "케이든",
+      "ddayDate": "2026-05-30",
+      "heartColor": "#aa0000",
+      "catchphrase": "",
+      "catchphraseEnabled": false,
+      "catchphraseItalic": false,
+      "category": [
+        "CAVEDUCK"
+      ],
+      "categoryColors": {
+        "CAVEDUCK": "catGreen"
+      },
+      "tags": {
+        "appearance": [
+          "1 boy",
+          "male",
+          "1.8::brown hair",
+          "red hair",
+          "streaked hair",
+          "multicolored hair",
+          "medium hair",
+          "double buns",
+          "sidelocks",
+          "parted bangs::",
+          "narrow eyes",
+          "light brown eyes",
+          "fair skin",
+          "slim",
+          "slender",
+          "narrow waist",
+          "lean",
+          "ear piercings",
+          "lip piercing",
+          ";d"
+        ],
+        "outfit": [
+          "cropped red chinese track jacket",
+          "white dragon graphic on back",
+          "zip up front",
+          "cropped at ribcage",
+          "low rise black cargo trousers",
+          "loose fit",
+          "waistband sitting below hip bones",
+          "red satin sash tied loosely at hip",
+          "chunky white sneakers",
+          "layered chain necklace",
+          "stud earring"
+        ]
+      },
+      "memo": "#AA0000 (Dark Red)\n기본 옷:\ncrop tracksuit,",
+      "profile": "Li Lan\n애칭: Lang-lang (랑랑)\n직급: 황화루의 수장\n국적: 중국\n나이: 28살\n키: 178cm",
+      "bannerImagePath": "images/mrjap4gin52dj-banner-mrjap7cw.jpg",
+      "extraImages": [
+        {
+          "path": "images/mrjap4gin52dj-extra-mrjap9030.png",
+          "prompt": "Caden Hill (케이든 힐)\n\n1 boy, male, 0.1::aged up::, 0.2::bishounen::, toned male, male dominated, 2::handsome::, 1.5::ash charcoal color very short hair::, 1.3::asymmetrical bangs::, hair behind ear, 1.5::mint eyes, aqua eyes::, 2::thin eyebrows::, 1.6::tsurime::, cat eye, aegyo sal, tall, 2::broad shoulders::, white skin, :), gentle smile, soft smile, no accessory ,\nnavy suit jacket, 1.2::slightly loose white collard shirt::, -2::tie::, formal uniform, neat appearance,"
+        },
+        {
+          "path": "images/mrjap4gin52dj-extra-mrjapb5p1.jpg",
+          "prompt": "♡판"
+        },
+        {
+          "path": "images/mrjap4gin52dj-extra-mrjapcvw2.jpg",
+          "prompt": "♡판"
+        },
+        {
+          "path": "images/mrjap4gin52dj-extra-mrjapeh63.jpg",
+          "prompt": "♡판"
+        }
+      ],
+      "pinned": false,
+      "createdAt": "2026-07-13T14:05:58.866Z",
+      "categoryColor": "catPurple"
     }
   ]
 }
