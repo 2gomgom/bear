@@ -10,5 +10,62 @@
     "bgImagePath": "",
     "heartColor": "#c9184a"
   },
-  "images": []
+  "images": [
+    {
+      "id": "mrigvlxp48y8w",
+      "path": "images/mrigvlxp48y8w.png",
+      "title": "염사하",
+      "subtitle": "페더",
+      "ddayDate": "2026-05-07",
+      "heartColor": "#7bd9e3",
+      "category": [
+        "ARCH",
+        "MAIN"
+      ],
+      "tags": {
+        "appearance": [
+          "1 boy",
+          "mature male",
+          "2::bishounen::",
+          "toned male",
+          "2.5::short light blue hair",
+          "gradient hair",
+          "blue eyes::",
+          "1.5::curly hair::",
+          "1.2::hair between eyes::",
+          "curtained bangs",
+          "narrowed eyes",
+          "jitome",
+          "= =",
+          "3::mole under mouth::",
+          "1.7:: a crown of thorns dark blue tattoo wrapped around only neck::",
+          "slender",
+          "pale skin",
+          "no head accessory"
+        ],
+        "outfit": [
+          "opened baggy distressed grey zip-up hoodie",
+          "scoop neck black bodysuit",
+          "high-cut leg",
+          "side cut-out",
+          "skintight",
+          "black clothing",
+          "tattoo on stomach",
+          "visible tattoo",
+          "ink on skin",
+          "loose-fitting black pants",
+          "black chunky boots"
+        ]
+      },
+      "memo": "복부 문신 안 나올 경우:\ngiant tattoo on stomach, tattoo on iliac crest, dark blue tattoo,",
+      "profile": "",
+      "extraImages": [
+        {
+          "path": "images/mrigvlxp48y8w-extra-mrigvobm0.jpg",
+          "prompt": "페더(박요한) \n: 1boy, mature male, 2.3::bishounen::, toned male, parted hair, 1.7::gentle smile, soft smile::, pale skin, short hair, dark olive brown hair, dark ash brown hair, smooth hair, fine hair strands, short mullet, shaggy cut, turquoise blue eyes, eyelashes, -1.5::V-shaped eyebrows::, 2::tareme::,\n\n3::white buttoned military coat::, deep v-neck, 2::no inner::, visible collarbone, bare neck, white pants, white belt, white suit pants, black shoes, -2::cape::,"
+        }
+      ],
+      "createdAt": "2026-07-13T00:11:12.972Z"
+    }
+  ]
 }
