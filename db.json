@@ -286,11 +286,18 @@
       "title": "스카라브",
       "subtitle": "모스",
       "ddayDate": "2026-07-11",
-      "heartColor": "#f5e27a",
+      "heartColor": "#d4af37",
+      "catchphrase": "빛은 내가 내렸거늘, 너희는 감히 스스로 빛을 내려 하는구나. 좋다. 그 빛이 꺼진 자리에서 영원히 절망하게 해주마.",
+      "catchphraseEnabled": true,
+      "catchphraseItalic": true,
       "category": [
         "CRACK",
         "THEMIS"
       ],
+      "categoryColors": {
+        "CRACK": "catGreen",
+        "THEMIS": "catPurple"
+      },
       "tags": {
         "appearance": [
           "1 boy",
@@ -344,12 +351,7 @@
         }
       ],
       "pinned": false,
-      "createdAt": "2026-07-13T11:58:53.350Z",
-      "categoryColor": "catPurple",
-      "categoryColors": {},
-      "catchphrase": "",
-      "catchphraseEnabled": false,
-      "catchphraseItalic": false
+      "createdAt": "2026-07-13T11:58:53.350Z"
     }
   ]
 }
