@@ -604,7 +604,7 @@
       "extraImages": [
         {
           "path": "images/mrjap4gin52dj-extra-mrjap9030.png",
-          "prompt": "Caden Hill (케이든 힐)\n\n1 boy, male, 0.1::aged up::, 0.2::bishounen::, toned male, male dominated, 2::handsome::, 1.5::ash charcoal color very short hair::, 1.3::asymmetrical bangs::, hair behind ear, 1.5::mint eyes, aqua eyes::, 2::thin eyebrows::, 1.6::tsurime::, cat eye, aegyo sal, tall, 2::broad shoulders::, white skin, :), gentle smile, soft smile, no accessory ,\nnavy suit jacket, 1.2::slightly loose white collard shirt::, -2::tie::, formal uniform, neat appearance,"
+          "prompt": "Caden Hill (케이든 힐)\n\n1 boy, male, 0.1::aged up::, 0.2::bishounen::, toned male, male dominated, 2::handsome::, 1.5::ash charcoal color very short hair::, 1.3::asymmetrical bangs::, hair behind ear, 1.5::mint eyes, aqua eyes::, 2::thin eyebrows::, 1.6::tsurime::, cat eye, aegyo sal, tall, 2::broad shoulders::, white skin, :), gentle smile, soft smile, no accessory,\n\nnavy suit jacket, 1.2::slightly loose white collard shirt::, -2::tie::, formal uniform, neat appearance,"
         },
         {
           "path": "images/mrjap4gin52dj-extra-mrjapb5p1.jpg",
@@ -620,8 +620,7 @@
         }
       ],
       "pinned": false,
-      "createdAt": "2026-07-13T14:05:58.866Z",
-      "categoryColor": "catPurple"
+      "createdAt": "2026-07-13T14:05:58.866Z"
     }
   ]
 }
