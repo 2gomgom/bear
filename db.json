@@ -10,5 +10,23 @@
     "bgImagePath": "",
     "heartColor": "#c9184a"
   },
-  "images": []
+  "images": [
+    {
+      "id": "mrj2tg533opv2",
+      "path": "images/mrj2tg533opv2.png",
+      "title": "fd",
+      "subtitle": "",
+      "ddayDate": "",
+      "heartColor": "#c9184a",
+      "category": [],
+      "tags": {
+        "appearance": [],
+        "outfit": []
+      },
+      "memo": "",
+      "profile": "",
+      "extraImages": [],
+      "createdAt": "2026-07-13T10:25:23.703Z"
+    }
+  ]
 }
