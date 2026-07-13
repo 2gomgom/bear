@@ -134,7 +134,12 @@
         }
       ],
       "pinned": false,
-      "createdAt": "2026-07-13T12:44:34.618Z"
+      "createdAt": "2026-07-13T12:44:34.618Z",
+      "categoryColor": "catPurple",
+      "categoryColors": {},
+      "catchphrase": "",
+      "catchphraseEnabled": false,
+      "catchphraseItalic": false
     },
     {
       "id": "mrj2tg533opv2",
@@ -143,11 +148,19 @@
       "subtitle": "페더",
       "ddayDate": "2026-05-07",
       "heartColor": "#84e1f0",
+      "catchphrase": "가장 차가운 지옥에서 피어난, 가장 뜨거운 자기혐오. 코드네임 ‘게헤나’. 그는 스스로를 태우는 불꽃이자, 그 누구도 구원할 수 없는 성스러운 폐허다.",
+      "catchphraseEnabled": false,
+      "catchphraseItalic": true,
       "category": [
         "CAVEDUCK",
         "ARCH",
         "MAIN"
       ],
+      "categoryColors": {
+        "CAVEDUCK": "catGreen",
+        "ARCH": "catPurple",
+        "MAIN": "catBlue"
+      },
       "tags": {
         "appearance": [
           "1 boy",
@@ -329,7 +342,12 @@
         }
       ],
       "pinned": false,
-      "createdAt": "2026-07-13T11:58:53.350Z"
+      "createdAt": "2026-07-13T11:58:53.350Z",
+      "categoryColor": "catPurple",
+      "categoryColors": {},
+      "catchphrase": "",
+      "catchphraseEnabled": false,
+      "catchphraseItalic": false
     }
   ]
 }
