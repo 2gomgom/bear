@@ -79,42 +79,6 @@
           "prompt": "페더(박요한)\n\n1 boy, mature male, 2.3::bishounen::, toned male, parted hair, 1.7::gentle smile, soft smile::, pale skin, short hair, dark olive brown hair, dark ash brown hair, smooth hair, fine hair strands, short mullet, shaggy cut, turquoise blue eyes, eyelashes, -1.5::V-shaped eyebrows::, 2::tareme::,\n\n3::white buttoned military coat::, deep v-neck, 2::no inner::, visible collarbone, bare neck, white pants, white belt, white suit pants, black shoes, -2::cape::,"
         },
         {
-          "path": "images/mrj2tg533opv2-extra-mrj36x3h1.png",
-          "prompt": "©마요"
-        },
-        {
-          "path": "images/mrj2tg533opv2-extra-mrj36ytk2.png",
-          "prompt": "©세개"
-        },
-        {
-          "path": "images/mrj2tg533opv2-extra-mrj370b93.png",
-          "prompt": "©마요"
-        },
-        {
-          "path": "images/mrj2tg533opv2-extra-mrj372174.png",
-          "prompt": "©부랑"
-        },
-        {
-          "path": "images/mrj2tg533opv2-extra-mrj373ud5.png",
-          "prompt": "©론"
-        },
-        {
-          "path": "images/mrj2tg533opv2-extra-mrj375rc6.png",
-          "prompt": "©부랑"
-        },
-        {
-          "path": "images/mrj2tg533opv2-extra-mrj377qh7.png",
-          "prompt": "©큐지"
-        },
-        {
-          "path": "images/mrj2tg533opv2-extra-mrj37a4w8.png",
-          "prompt": "©두쿤"
-        },
-        {
-          "path": "images/mrj2tg533opv2-extra-mrj37c8n9.png",
-          "prompt": "©두쿤"
-        },
-        {
           "path": "images/mrj2tg533opv2-extra-mrj37esr10.png",
           "prompt": "©이도"
         },
@@ -129,6 +93,46 @@
         {
           "path": "images/mrj2tg533opv2-extra-mrj37n3r13.png",
           "prompt": "©이도"
+        },
+        {
+          "path": "images/mrj2tg533opv2-extra-mrj37a4w8.png",
+          "prompt": "©두쿤"
+        },
+        {
+          "path": "images/mrj2tg533opv2-extra-mrj37c8n9.png",
+          "prompt": "©두쿤"
+        },
+        {
+          "path": "images/mrj2tg533opv2-extra-mrj36x3h1.png",
+          "prompt": "©마요"
+        },
+        {
+          "path": "images/mrj2tg533opv2-extra-mrj370b93.png",
+          "prompt": "©마요"
+        },
+        {
+          "path": "images/mrj2tg533opv2-extra-mrj36ytk2.png",
+          "prompt": "©세개"
+        },
+        {
+          "path": "images/mrj2tg533opv2-extra-mrj377qh7.png",
+          "prompt": "©큐지"
+        },
+        {
+          "path": "images/mrj2tg533opv2-extra-mrj372174.png",
+          "prompt": "©부랑"
+        },
+        {
+          "path": "images/mrj2tg533opv2-extra-mrj375rc6.png",
+          "prompt": "©부랑"
+        },
+        {
+          "path": "images/mrj2tg533opv2-extra-mrj373ud5.png",
+          "prompt": "©론"
+        },
+        {
+          "path": "images/mrj2tg533opv2-extra-mrj3a4ye14.jpg",
+          "prompt": "©만두걸"
         }
       ],
       "createdAt": "2026-07-13T10:25:23.703Z"
