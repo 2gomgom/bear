@@ -630,10 +630,12 @@ async function ghGetImageUrl(path){
   // 1MB가 넘는 이미지는 Contents API가 base64를 안 내려주므로, raw.githubusercontent.com에서 직접 받아온다.
   try{
     const res = await fetch(rawContentUrl(path), { headers: { 'Authorization': `token ${settings.token}` }, cache:'no-store' });
+    if(res.status === 403 || res.status === 429){ const e = new Error('요청이 너무 많아요 (rate limit)'); e.rateLimited = true; throw e; }
     if(!res.ok) throw new Error('raw ' + res.status);
     const blob = await res.blob();
     return URL.createObjectURL(blob);
   }catch(e){
+    if(e.rateLimited) throw e;
     // 폴백: Contents API (1MB 이하 파일에만 동작)
     const file = await ghGetFile(path);
     if(!file || !file.content) throw new Error('이미지를 불러올 수 없어요');
@@ -642,10 +644,11 @@ async function ghGetImageUrl(path){
 }
 function delay(ms){ return new Promise(res=>setTimeout(res, ms)); }
 // 한꺼번에 너무 많은 이미지를 동시에 불러오면 (특히 새로고침 직후) 요청이 몰려 실패하기 쉬우므로
-// 동시 로딩 개수를 제한하는 간단한 큐
+// 동시 로딩 개수를 제한하는 간단한 큐. GitHub API 요청이 너무 몰리면 일시적으로 전체 요청이
+// 차단(rate limit)될 수 있어 동시 개수와 재시도 횟수를 보수적으로 잡는다.
 const imageLoadQueue = [];
 let imageLoadActive = 0;
-const MAX_CONCURRENT_IMAGE_LOADS = 4;
+const MAX_CONCURRENT_IMAGE_LOADS = 2;
 function runImageLoadQueue(){
   while(imageLoadActive < MAX_CONCURRENT_IMAGE_LOADS && imageLoadQueue.length){
     const task = imageLoadQueue.shift();
@@ -659,11 +662,19 @@ function queueImageLoad(task){
     runImageLoadQueue();
   });
 }
-async function ghGetImageUrlRetry(path, attempts=3){
+async function ghGetImageUrlRetry(path, attempts=2){
   let lastErr;
   for(let i=0;i<attempts;i++){
     try{ return await ghGetImageUrl(path); }
-    catch(e){ lastErr = e; if(i < attempts-1) await delay(500 * (i+1)); }
+    catch(e){
+      lastErr = e;
+      if(e.rateLimited){
+        // 요청이 막힌 상태에서는 더 시도할수록 상황이 나빠지므로 즉시 포기한다.
+        imageLoadQueue.length = 0;
+        throw e;
+      }
+      if(i < attempts-1) await delay(900 * (i+1));
+    }
   }
   throw lastErr;
 }
@@ -1523,6 +1534,7 @@ function renderGallery(){
     observer.observe(card);
   });
 }
+let rateLimitWarned = false;
 async function loadCardImage(cardEl){
   const path = cardEl.dataset.path;
   const thumb = cardEl.querySelector('.card-thumb');
@@ -1535,6 +1547,10 @@ async function loadCardImage(cardEl){
     imgEl.src = url;
     thumb.replaceChild(imgEl, ph);
   }catch(e){
+    if(e.rateLimited && !rateLimitWarned){
+      rateLimitWarned = true;
+      toast('요청이 일시적으로 많아요. 잠시 후 새로고침해주세요');
+    }
     // 재시도까지 실패하면 탭해서 다시 시도할 수 있게 표시
     const ph = thumb.querySelector('.ph');
     if(!ph) return;
