@@ -10,23 +10,5 @@
     "bgImagePath": "",
     "heartColor": "#c9184a"
   },
-  "images": [
-    {
-      "id": "mrj0uiobejz66",
-      "path": "images/mrj0uiobejz66.png",
-      "title": "염사하",
-      "subtitle": "",
-      "ddayDate": "",
-      "heartColor": "#c9184a",
-      "category": [],
-      "tags": {
-        "appearance": [],
-        "outfit": []
-      },
-      "memo": "",
-      "profile": "",
-      "extraImages": [],
-      "createdAt": "2026-07-13T09:30:14.411Z"
-    }
-  ]
+  "images": []
 }
