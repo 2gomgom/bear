@@ -20,6 +20,68 @@
   },
   "images": [
     {
+      "id": "mrkwp3igzlpi0",
+      "path": "images/mrkwp3igzlpi0.png",
+      "title": "주님한놈갑니다 (차신)",
+      "subtitle": "",
+      "ddayDate": "",
+      "heartColor": "#c9184a",
+      "catchphrase": "",
+      "catchphraseEnabled": false,
+      "catchphraseItalic": false,
+      "category": [],
+      "categoryColors": {},
+      "tags": {
+        "appearance": [
+          "1 boy",
+          "male",
+          "toned male",
+          "beautiful male",
+          "slender",
+          "pale skin",
+          "half closed eyes",
+          "2::pure white hair",
+          "cool white hair::",
+          "3::high_ponytail::",
+          "long hair",
+          "full bangs",
+          "3::straight hair",
+          "hime_cut::",
+          "2::brilliant yellow eyes::",
+          "2::long sharp black Nails::"
+        ],
+        "outfit": [
+          "oversized pastel blue tech jacket",
+          "circuit pattern",
+          "white cropped turtleneck underneath",
+          "low rise white wide trousers",
+          "reflective trim",
+          "chunky holographic sneakers",
+          "translucent y2k visor",
+          "pushed up",
+          "layered pearl and chain necklace",
+          "star shaped LED earring",
+          "small gem sticker under eye",
+          "giant pixel purple and blue greatsword",
+          "claymore",
+          "two-handed sword",
+          "long straight blade",
+          "sharp tip",
+          "simple crossguard",
+          "wrapped hilt",
+          "pixel shading",
+          "chunky pixel outline",
+          "8bit retro style"
+        ]
+      },
+      "memo": "",
+      "profile": "",
+      "bannerImagePath": "",
+      "extraImages": [],
+      "pinned": false,
+      "createdAt": "2026-07-14T17:09:35.364Z"
+    },
+    {
       "id": "mrjzs0iap3nfv",
       "path": "images/mrjzs0iap3nfv.png",
       "title": "사하야",
@@ -540,7 +602,8 @@
         }
       ],
       "pinned": true,
-      "createdAt": "2026-07-13T11:58:53.350Z"
+      "createdAt": "2026-07-13T11:58:53.350Z",
+      "categoryColor": "catPurple"
     },
     {
       "id": "mrjbiv6y1ouvq",
