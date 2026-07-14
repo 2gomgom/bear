@@ -29,8 +29,12 @@
       "catchphrase": "",
       "catchphraseEnabled": false,
       "catchphraseItalic": false,
-      "category": [],
-      "categoryColors": {},
+      "category": [
+        "CRACK"
+      ],
+      "categoryColors": {
+        "CRACK": "catGreen"
+      },
       "tags": {
         "appearance": [
           "1boy",
