@@ -666,7 +666,7 @@
         ]
       },
       "memo": "#FF69B4 (Hot Pink)\n\n표정:\nwink, tongue out, hands behind head",
-      "profile": "P0P0\n종족: 너구리 수인\n나이: 불명\n키: 176cm",
+      "profile": "P0P0\n종족: 너구리 수인\n성별: 남성\n나이: 불명\n키: 176cm",
       "bannerImagePath": "",
       "extraImages": [
         {
@@ -675,8 +675,7 @@
         }
       ],
       "pinned": false,
-      "createdAt": "2026-07-14T01:39:06.669Z",
-      "categoryColor": "catPurple"
+      "createdAt": "2026-07-14T01:39:06.669Z"
     },
     {
       "id": "mrkwp3igzlpi0",
