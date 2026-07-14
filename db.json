@@ -20,6 +20,54 @@
   },
   "images": [
     {
+      "id": "mrjzght9ojhfo",
+      "path": "images/mrjzght9ojhfo.png",
+      "title": "포포",
+      "subtitle": "신",
+      "ddayDate": "2026-06-26",
+      "heartColor": "#ff69b4",
+      "catchphrase": "",
+      "catchphraseEnabled": false,
+      "catchphraseItalic": false,
+      "category": [],
+      "categoryColors": {},
+      "tags": {
+        "appearance": [
+          "1boy",
+          "animal ears",
+          "raccoon ears",
+          "raccoon tail",
+          "animal ear fluff",
+          "mature male",
+          "pink hair",
+          "absurdly long hair",
+          "wavy hair",
+          "almond-shaped eyes",
+          "rose eyes",
+          "dark skin",
+          "slim"
+        ],
+        "outfit": [
+          "hoodie",
+          "pastel color",
+          "pleated skirt",
+          "thighhighs",
+          "flower tattoo on stomach"
+        ]
+      },
+      "memo": "#FF69B4 (Hot Pink)\n\n표정:\nwink, tongue out, hands behind head",
+      "profile": "P0P0\n종족: 너구리 수인\n나이: 불명\n키: 176cm",
+      "bannerImagePath": "",
+      "extraImages": [
+        {
+          "path": "images/mrjzght9ojhfo-extra-mrjzgko10.jpg",
+          "prompt": "S!N (신)"
+        }
+      ],
+      "pinned": false,
+      "createdAt": "2026-07-14T01:39:06.669Z"
+    },
+    {
       "id": "mrj2tg533opv2",
       "path": "images/mrj2tg533opv2-mrjdmee2.png",
       "title": "염사하",
@@ -154,7 +202,8 @@
         }
       ],
       "pinned": true,
-      "createdAt": "2026-07-13T10:25:23.703Z"
+      "createdAt": "2026-07-13T10:25:23.703Z",
+      "categoryColor": "catPurple"
     },
     {
       "id": "mrj7sfqyijh8u",
