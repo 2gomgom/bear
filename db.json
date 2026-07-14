@@ -20,6 +20,70 @@
   },
   "images": [
     {
+      "id": "mrl4ywv7n2bgv",
+      "path": "images/mrl4ywv7n2bgv.png",
+      "title": "나비",
+      "subtitle": "안죽림",
+      "ddayDate": "2026-07-09",
+      "heartColor": "#789262",
+      "catchphrase": "",
+      "catchphraseEnabled": false,
+      "catchphraseItalic": false,
+      "category": [
+        "CRACK"
+      ],
+      "categoryColors": {
+        "CRACK": "catGreen"
+      },
+      "tags": {
+        "appearance": [
+          "1boy",
+          "male",
+          "toned male",
+          "slender",
+          "beautiful male",
+          "sharp eyes",
+          "yellow eyes",
+          "half-closed eyes",
+          "emo hair",
+          "pale skin",
+          "white and brown color hair",
+          "short hair",
+          "cone hair bun",
+          "butterfly hairpin",
+          "ear piercings",
+          "black Nails",
+          "black hair tie on wrist"
+        ],
+        "outfit": [
+          "oversized white hanfu robe",
+          "wide sleeves covering hands",
+          "layered inner robe",
+          "high-waisted shorts",
+          "ornamental waist belt",
+          "2::bandaged legs::",
+          "traditional chinese boots",
+          "jade pendant",
+          "gold ornaments",
+          "ancient chinese physician",
+          "bamboo medicine case",
+          "giant bronze syringe",
+          "yellow medicine in syringe"
+        ]
+      },
+      "memo": "#789262 (Bamboo Green)",
+      "profile": "Nabi 羅霏\n종족: 구미호\n국적: 중국\n나이: 불명 (기원전 중국)\n첫만남: 기원전 221년\n키: 174cm",
+      "bannerImagePath": "",
+      "extraImages": [
+        {
+          "path": "images/mrl4ywv7n2bgv-extra-mrl4yzvy0.jpg",
+          "prompt": "안죽림"
+        }
+      ],
+      "pinned": false,
+      "createdAt": "2026-07-14T21:01:10.243Z"
+    },
+    {
       "id": "mrl4niomssbjk",
       "path": "images/mrl4niomssbjk.png",
       "title": "네베",
