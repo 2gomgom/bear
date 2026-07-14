@@ -23,7 +23,7 @@
       "id": "mrj2tg533opv2",
       "path": "images/mrj2tg533opv2-mrjdmee2.png",
       "title": "염사하",
-      "subtitle": "페더",
+      "subtitle": "페더 #사한",
       "ddayDate": "2026-05-07",
       "heartColor": "#84e1f0",
       "catchphrase": "가장 차가운 지옥에서 피어난, 가장 뜨거운 자기혐오. 코드네임 ‘게헤나’. 그는 스스로를 태우는 불꽃이자, 그 누구도 구원할 수 없는 성스러운 폐허다.",
@@ -154,8 +154,7 @@
         }
       ],
       "pinned": true,
-      "createdAt": "2026-07-13T10:25:23.703Z",
-      "categoryColor": "catPurple"
+      "createdAt": "2026-07-13T10:25:23.703Z"
     },
     {
       "id": "mrj7sfqyijh8u",
@@ -741,7 +740,8 @@
       "bannerImagePath": "",
       "extraImages": [],
       "pinned": false,
-      "createdAt": "2026-07-14T17:09:35.364Z"
+      "createdAt": "2026-07-14T17:09:35.364Z",
+      "categoryColor": "catPurple"
     },
     {
       "id": "mrjzs0iap3nfv",
@@ -848,7 +848,8 @@
       "bannerImagePath": "",
       "extraImages": [],
       "pinned": false,
-      "createdAt": "2026-07-14T17:10:27.298Z"
+      "createdAt": "2026-07-14T17:10:27.298Z",
+      "categoryColor": "catPurple"
     }
   ]
 }
