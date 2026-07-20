@@ -2054,31 +2054,73 @@ function loadImageFromFile(file){
     img.src = url;
   });
 }
-// 업로드하는 모든 이미지는 캔버스에 다시 그려서 저장한다.
-// 이 과정에서 EXIF 등 촬영기기/위치 정보 같은 메타데이터가 자동으로 제거되고,
-// 용량이 큰 이미지는 리사이즈까지 함께 처리돼서 로딩 실패 확률도 줄어든다.
-async function prepareImageForUpload(file){
-  const MAX_DIM = 1600; // 긴 변 기준 최대 해상도
-  const QUALITY = 0.88;
+// 업로드하는 모든 이미지는 예외 없이 캔버스에 다시 그려서 저장한다(트위터식 처리).
+// - 긴 변을 UPLOAD_MAX_DIM 이하로 리사이즈
+// - 투명도가 실제로 필요한 이미지가 아니면 무조건 JPEG로 변환해 화질을 낮춘다
+//   (PNG는 canvas.toBlob의 quality 값이 무시되어 무손실로 남기 때문에,
+//    투명 배경이 없는 PNG를 그대로 두면 "원본과 다를 바 없는" 상태로 업로드되는
+//    문제가 있었음 — 이를 막기 위해 알파 채널 유무를 직접 검사한다)
+// - 목표 용량(TARGET_MAX_BYTES)을 넘으면 화질을 단계적으로 낮춰 재인코딩
+// - 어떤 이유로든 처리에 실패하면 "원본을 그대로 올리는" 대신 업로드를 실패시킨다
+const UPLOAD_MAX_DIM = 1600;        // 긴 변 기준 최대 해상도
+const UPLOAD_JPEG_QUALITY = 0.82;   // 기본 JPEG 화질
+const UPLOAD_JPEG_MIN_QUALITY = 0.5; // 용량 초과시 낮출 수 있는 최저 화질
+const UPLOAD_TARGET_MAX_BYTES = 1.5 * 1024 * 1024; // 재인코딩 목표 상한(1.5MB)
+
+// 캔버스에 그려진 이미지에 실제로 불투명이 아닌(투명) 픽셀이 있는지 검사.
+// 투명 픽셀이 전혀 없으면 PNG를 유지할 이유가 없으므로 JPEG로 변환해 화질을 낮춘다.
+function canvasHasTransparency(canvas){
   try{
-    const img = await loadImageFromFile(file);
-    const { width, height } = img;
-    const isPng = file.type === 'image/png';
-    const scale = Math.min(1, MAX_DIM / Math.max(width, height));
-    const outW = Math.max(1, Math.round(width * scale));
-    const outH = Math.max(1, Math.round(height * scale));
-    const canvas = document.createElement('canvas');
-    canvas.width = outW; canvas.height = outH;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, outW, outH);
-    const outMime = isPng ? 'image/png' : 'image/jpeg';
-    const dataUrl = canvas.toDataURL(outMime, QUALITY);
-    const cleanBlob = await new Promise(resolve => canvas.toBlob(resolve, outMime, QUALITY));
-    return { base64: dataUrl.split(',')[1], ext: isPng ? 'png' : 'jpg', blob: cleanBlob };
+    const w = canvas.width, h = canvas.height;
+    // 성능을 위해 최대 200x200 크기로 축소 샘플링해서 검사
+    const sw = Math.max(1, Math.min(w, 200));
+    const sh = Math.max(1, Math.min(h, 200));
+    const sample = document.createElement('canvas');
+    sample.width = sw; sample.height = sh;
+    const sctx = sample.getContext('2d');
+    sctx.drawImage(canvas, 0, 0, sw, sh);
+    const data = sctx.getImageData(0, 0, sw, sh).data;
+    for(let i = 3; i < data.length; i += 4){
+      if(data[i] < 255) return true;
+    }
+    return false;
   }catch(e){
-    // 캔버스 처리에 실패한 경우에만 원본 그대로 업로드(메타데이터가 남을 수 있음)
-    return { base64: await fileToBase64(file), ext: safeExt(file.name), blob: file };
+    // 검사 자체가 실패하면 안전하게 "투명도 있음"으로 간주해 PNG를 유지
+    return true;
   }
+}
+async function canvasToBlobWithSizeCap(canvas, mime, startQuality){
+  let quality = startQuality;
+  let blob = await new Promise(resolve => canvas.toBlob(resolve, mime, quality));
+  if(!blob) throw new Error('이미지 인코딩에 실패했어요');
+  if(mime === 'image/jpeg'){
+    while(blob && blob.size > UPLOAD_TARGET_MAX_BYTES && quality > UPLOAD_JPEG_MIN_QUALITY){
+      quality = Math.max(UPLOAD_JPEG_MIN_QUALITY, quality - 0.1);
+      const next = await new Promise(resolve => canvas.toBlob(resolve, mime, quality));
+      if(!next) break;
+      blob = next;
+    }
+  }
+  return blob;
+}
+async function prepareImageForUpload(file){
+  // loadImageFromFile이 실패하면(손상된 파일 등) 여기서 그대로 예외가 던져지고,
+  // 절대로 원본 파일을 그대로 업로드하는 경로로 빠지지 않는다.
+  const img = await loadImageFromFile(file);
+  const { width, height } = img;
+  const scale = Math.min(1, UPLOAD_MAX_DIM / Math.max(width, height));
+  const outW = Math.max(1, Math.round(width * scale));
+  const outH = Math.max(1, Math.round(height * scale));
+  const canvas = document.createElement('canvas');
+  canvas.width = outW; canvas.height = outH;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, outW, outH);
+
+  const keepPng = canvasHasTransparency(canvas);
+  const outMime = keepPng ? 'image/png' : 'image/jpeg';
+  const cleanBlob = await canvasToBlobWithSizeCap(canvas, outMime, UPLOAD_JPEG_QUALITY);
+  const base64 = await fileToBase64(cleanBlob);
+  return { base64, ext: keepPng ? 'png' : 'jpg', blob: cleanBlob };
 }
 function loadImageFromBlob(blob){
   return new Promise((resolve, reject)=>{
@@ -2090,28 +2132,21 @@ function loadImageFromBlob(blob){
   });
 }
 // 레거시 임포트 전용: 원본 파일을 그대로 복사하지 않고, 다른 업로드 경로와
-// 똑같이 캔버스에 다시 그려서 반환한다. 이 과정에서 EXIF 등 메타데이터가 제거된다.
+// 똑같이 캔버스에 다시 그려서 반환한다. 이 과정에서 EXIF 등 메타데이터가 제거되고,
+// 투명도가 없으면 JPEG로 변환해 화질도 함께 낮춘다(원본 그대로 사용하는 폴백 없음).
 async function stripMetadataFromBlob(blob, pathHint){
-  const MAX_DIM = 1600;
-  const QUALITY = 0.88;
-  try{
-    const img = await loadImageFromBlob(blob);
-    const { width, height } = img;
-    const isPng = (blob.type === 'image/png') || /\.png$/i.test(pathHint || '');
-    const scale = Math.min(1, MAX_DIM / Math.max(width, height));
-    const outW = Math.max(1, Math.round(width * scale));
-    const outH = Math.max(1, Math.round(height * scale));
-    const canvas = document.createElement('canvas');
-    canvas.width = outW; canvas.height = outH;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, outW, outH);
-    const outMime = isPng ? 'image/png' : 'image/jpeg';
-    const outBlob = await new Promise(resolve => canvas.toBlob(resolve, outMime, QUALITY));
-    return outBlob || blob;
-  }catch(e){
-    // 캔버스 처리에 실패한 경우에만 원본 그대로 사용(메타데이터가 남을 수 있음)
-    return blob;
-  }
+  const img = await loadImageFromBlob(blob);
+  const { width, height } = img;
+  const scale = Math.min(1, UPLOAD_MAX_DIM / Math.max(width, height));
+  const outW = Math.max(1, Math.round(width * scale));
+  const outH = Math.max(1, Math.round(height * scale));
+  const canvas = document.createElement('canvas');
+  canvas.width = outW; canvas.height = outH;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, outW, outH);
+  const keepPng = canvasHasTransparency(canvas);
+  const outMime = keepPng ? 'image/png' : 'image/jpeg';
+  return await canvasToBlobWithSizeCap(canvas, outMime, UPLOAD_JPEG_QUALITY);
 }
 function splitTags(str){ return str.split(',').map(s=>s.trim()).filter(Boolean); }
 function updateCombinedPreview(){
