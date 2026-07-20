@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>이동 중...</title>
+<script>
+  /* GitHub Pages는 존재하지 않는 주소로 접속하면 이 파일을 보여줘요.
+     /bear/닉네임 같은 예쁜 공유 주소를 index.html이 이해할 수 있는
+     형태(?p=닉네임)로 바꿔서 넘겨준 뒤, index.html이 다시 주소창을
+     예쁜 형태로 되돌려놓아요. */
+  var BASE = '/bear/';
+  var path = location.pathname;
+  var slug = path.indexOf(BASE) === 0 ? path.slice(BASE.length) : '';
+  slug = slug.replace(/\/+$/, '');
+  var target = BASE + (slug ? ('?p=' + encodeURIComponent(slug)) : '') + location.hash;
+  location.replace(target);
+</script>
+</head>
+<body>이동 중이에요...</body>
+</html>

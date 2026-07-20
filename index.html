@@ -347,7 +347,7 @@
   <div class="lockCard">
     <div class="emoji">🗂️</div>
     <h1>곰곰 아카이브</h1>
-    <p>나만의 페르소나 리스트를 아카이빙해요. @2han_bear <br>불러오는 중이에요...</p>
+    <p>나만의 페르소나 리스트를 아카이빙해요.<br>로그인해서 내 갤러리를 만들거나, 공유받은 주소로 접속해주세요.</p>
     <button class="btn btn-primary" style="width:100%" onclick="openSettings()">계정 메뉴 열기</button>
   </div>
 </div>
@@ -394,7 +394,7 @@
   <div class="modal">
     <button class="closeX" onclick="closeModal('settingsModal')">✕</button>
     <h2>계정</h2>
-    <div class="sub" id="acctSub">구글 계정으로 로그인하면 나만의 갤러리를 만들고 편집할 수 있어요.</div>
+    <div class="sub" id="acctSub">구글 계정으로 로그인하면 나만의 아카이브를 만들 수 있어요.<br>문의 @2han_bear</div>
 
     <div id="acctLoggedOut">
       <div class="btnRow"><button class="btn btn-primary" onclick="loginWithGoogle()">Google로 로그인</button></div>
@@ -406,6 +406,9 @@
         <div class="acctRow"><span>내 갤러리 닉네임</span><b id="acctSlug">-</b></div>
       </div>
       <div class="acctUrlBox" id="acctUrlBox">-</div>
+      <div class="btnRow">
+        <button class="btn btn-primary" onclick="shareMySite()">🔗 주소 공유하기</button>
+      </div>
       <div class="btnRow">
         <button class="btn btn-secondary" onclick="copyMySiteUrl()">주소 복사</button>
         <button class="btn btn-secondary" onclick="goToMySite()">내 갤러리 보기</button>
@@ -787,15 +790,42 @@
 const SUPABASE_URL = 'https://gxbqvihqbjhqvwozzwqz.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4YnF2aWhxYmpocXZ3b3p6d3F6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ1MzI0OTIsImV4cCI6MjEwMDEwODQ5Mn0.USrZxtN0lSf_zYBcrrmL1pJt6G7IWBrLerexfcNzr9s';
 const BUCKET = 'images';
-const DEFAULT_SLUG = '2han_bear';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-/* 주소창의 ?u=닉네임 으로 어떤 사람의 갤러리를 볼지 정한다. 없으면 기본(주인장) 갤러리를 보여준다. */
-function getSlugFromUrl(){
+/* 이 사이트가 배포된 경로 (GitHub Pages 프로젝트 경로). 레포 이름을 바꾸면 여기도 같이 바꿔주세요. */
+const APP_BASE_PATH = '/bear/';
+
+/* 주소창의 ?u=닉네임(예전 방식) 또는 ?p=닉네임(404.html이 넘겨준 예쁜 주소), 혹은 이미
+   /bear/닉네임 형태로 떠 있는 주소로 어떤 사람의 갤러리를 볼지 정한다.
+   아무것도 없으면 null (기본 화면=로그인창만). */
+let resolvedSlug = null;
+function resolveSlugFromUrl(){
+  if(resolvedSlug !== null) return resolvedSlug;
   try{
     const params = new URLSearchParams(location.search);
-    return (params.get('u') || DEFAULT_SLUG).trim();
-  }catch(e){ return DEFAULT_SLUG; }
+    const uParam = params.get('u');
+    if(uParam){ resolvedSlug = uParam.trim(); return resolvedSlug; }
+
+    const pParam = params.get('p');
+    if(pParam){
+      resolvedSlug = pParam.trim();
+      /* 404.html을 거쳐서 온 경우, 주소창을 예쁜 형태로 바꿔준다 (새로고침 없이) */
+      history.replaceState(null, '', location.origin + APP_BASE_PATH + encodeURIComponent(resolvedSlug));
+      return resolvedSlug;
+    }
+
+    if(location.pathname.startsWith(APP_BASE_PATH)){
+      const rest = location.pathname.slice(APP_BASE_PATH.length).replace(/\/+$/, '');
+      if(rest){ resolvedSlug = decodeURIComponent(rest); return resolvedSlug; }
+    }
+
+    resolvedSlug = '';
+    return resolvedSlug;
+  }catch(e){ resolvedSlug = ''; return resolvedSlug; }
+}
+function getSlugFromUrl(){
+  const s = resolveSlugFromUrl();
+  return s ? s : null;
 }
 
 let currentUser = null;      // 로그인한 사람 (supabase auth user) 또는 null
@@ -1026,11 +1056,21 @@ async function saveDB(){
 
 /* ============ 초기화 ============ */
 async function init(){
-  document.getElementById('lockScreen').classList.add('hidden');
-  document.getElementById('app').classList.remove('hidden');
   const { data:{ session } } = await sb.auth.getSession();
   currentUser = session ? session.user : null;
   sb.auth.onAuthStateChange((_event, newSession)=>{ currentUser = newSession ? newSession.user : null; onAuthChange(); });
+
+  const slug = getSlugFromUrl();
+  if(!slug){
+    /* 주소에 ?u=닉네임 이 없으면(=기본 배포 링크) 아무 갤러리도 보여주지 않고 로그인 화면만 보여준다. */
+    document.getElementById('lockScreen').classList.remove('hidden');
+    document.getElementById('app').classList.add('hidden');
+    await onAuthChange();
+    return;
+  }
+
+  document.getElementById('lockScreen').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
   await refreshAll();
   await onAuthChange();
 }
@@ -1067,9 +1107,22 @@ async function logout(){
 }
 function mySiteUrl(){
   if(!myOwnSlug) return '';
-  return location.origin + location.pathname + '?u=' + encodeURIComponent(myOwnSlug);
+  return location.origin + APP_BASE_PATH + encodeURIComponent(myOwnSlug);
 }
 function copyMySiteUrl(){ copyText(mySiteUrl()); }
+async function shareMySite(){
+  if(!myOwnSlug){ toast('아직 내 갤러리가 없어요'); return; }
+  const url = mySiteUrl();
+  const isViewingOwn = currentSite && currentSite.slug === myOwnSlug;
+  const title = (isViewingOwn && db && db.profile && db.profile.name) ? db.profile.name : '곰곰 아카이브';
+  if(navigator.share){
+    try{ await navigator.share({ title, url }); }
+    catch(e){ /* 공유 취소 등은 조용히 무시 */ }
+  }else{
+    copyText(url);
+    toast('주소를 복사했어요');
+  }
+}
 function goToMySite(){
   if(!myOwnSlug){ toast('아직 내 갤러리가 없어요'); return; }
   location.href = mySiteUrl();
@@ -1115,7 +1168,8 @@ async function createMySite(){
     myOwnSlug = slug;
     const importLegacy = document.getElementById('inImportLegacy').checked;
     closeModal('onboardModal');
-    history.replaceState(null, '', location.origin + location.pathname + '?u=' + encodeURIComponent(slug));
+    resolvedSlug = slug;
+    history.replaceState(null, '', location.origin + APP_BASE_PATH + encodeURIComponent(slug));
     await refreshAll();
     toast('갤러리가 만들어졌어요!');
     if(importLegacy) await importLegacyBackup();
