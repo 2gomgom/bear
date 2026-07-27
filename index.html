@@ -1281,8 +1281,11 @@ async function refreshAll(){
   updateAccountUI();
 }
 /* 신규 가입자에게만 물어보는 초대 비밀번호. 기존에 이미 갤러리를 만든
-   사람은 이 검사를 건너뛰고 바로 들어가요. */
+   사람은 이 검사를 건너뛰고 바로 들어가요.
+   signupGateChecked: 로그인 상태 갱신 이벤트가 여러 번 울려도(브라우저 탭 전환,
+   토큰 갱신 등) 비밀번호 팝업이 중복으로 뜨지 않게 막는 플래그예요. */
 const SIGNUP_GATE_PASSWORD = 'qR7xK2mZ9pL';
+let signupGateChecked = false;
 
 async function onAuthChange(){
   document.getElementById('fabBtn').classList.toggle('hidden', !hasWriteAccess());
@@ -1290,7 +1293,8 @@ async function onAuthChange(){
   if(currentUser){
     const { data: mySite } = await sb.from('sites').select('slug').eq('user_id', currentUser.id).maybeSingle();
     myOwnSlug = mySite ? mySite.slug : null;
-    if(!mySite){
+    if(!mySite && !signupGateChecked){
+      signupGateChecked = true;
       const val = window.prompt('처음 오셨네요! 초대 비밀번호를 입력해주세요.');
       if(val === SIGNUP_GATE_PASSWORD){
         openOnboardModal();
@@ -1299,11 +1303,13 @@ async function onAuthChange(){
         await sb.auth.signOut();
         currentUser = null;
         myOwnSlug = null;
+        signupGateChecked = false;
         updateAccountUI();
       }
     }
   }else{
     myOwnSlug = null;
+    signupGateChecked = false;
   }
 }
 
