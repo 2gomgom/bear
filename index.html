@@ -2162,10 +2162,10 @@ function loadImageFromFile(file){
 //   절대 그대로 남기지 않기 위함). 투명 영역은 흰색 배경으로 채워진 뒤 저장된다.
 // - 목표 용량(TARGET_MAX_BYTES)을 넘으면 화질을 단계적으로 낮춰 재인코딩
 // - 어떤 이유로든 처리에 실패하면 "원본을 그대로 올리는" 대신 업로드를 실패시킨다
-const UPLOAD_MAX_DIM = 1600;        // 긴 변 기준 최대 해상도
-const UPLOAD_JPEG_QUALITY = 0.82;   // 기본 JPEG 화질
-const UPLOAD_JPEG_MIN_QUALITY = 0.5; // 용량 초과시 낮출 수 있는 최저 화질
-const UPLOAD_TARGET_MAX_BYTES = 1.5 * 1024 * 1024; // 재인코딩 목표 상한(1.5MB)
+const UPLOAD_MAX_DIM = 1280;        // 긴 변 기준 최대 해상도
+const UPLOAD_JPEG_QUALITY = 0.75;   // 기본 JPEG 화질
+const UPLOAD_JPEG_MIN_QUALITY = 0.45; // 용량 초과시 낮출 수 있는 최저 화질
+const UPLOAD_TARGET_MAX_BYTES = 700 * 1024; // 재인코딩 목표 상한(700KB)
 async function canvasToBlobWithSizeCap(canvas, mime, startQuality){
   let quality = startQuality;
   let blob = await new Promise(resolve => canvas.toBlob(resolve, mime, quality));
