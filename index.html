@@ -367,6 +367,50 @@
   .lockCard .emoji{ font-size:40px; margin-bottom:14px; }
   .lockCard h1{ font-size:21px; margin:0 0 8px; font-weight:700; }
   .lockCard p{ color:var(--text-muted); font-size:13.5px; line-height:1.6; margin-bottom:22px; }
+  .accessBadge{ position:absolute; top:6px; right:6px; z-index:4; font-size:10.5px; font-weight:600; padding:2px 7px; border-radius:20px; background:rgba(20,20,20,0.62); color:#fff; pointer-events:none; backdrop-filter:blur(2px); }
+  .lockThumb{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; color:var(--text-faint); font-size:12px; background:var(--bg-soft); }
+  .lockThumb .lockIco{ font-size:30px; }
+  .accessOpt{ display:flex; align-items:center; gap:7px; cursor:pointer; font-size:13px; color:var(--text); padding:5px 0; }
+  .lockErr{ color:#d6336c; font-size:12px; margin-top:6px; min-height:16px; }
+  /* 도구 줄 (공개 상태 필터 / 보기 방식 / 선택) */
+  .toolRow{ display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin:-2px 0 10px; }
+  .toolChips{ display:flex; gap:6px; flex:1 1 100%; flex-wrap:wrap; }
+  .toolChips:empty{ display:none; }
+  #viewToggleBtn{ margin-left:auto; }
+  .chip.sm{ padding:3px 10px; font-size:11.5px; }
+  .toolBtn{ flex-shrink:0; height:30px; padding:0 11px; border-radius:20px; border:none; background:rgba(255,255,255,0.38); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); font-size:12px; font-weight:500; color:var(--text-muted); cursor:pointer; font-family:inherit; white-space:nowrap; }
+  .toolBtn.on{ background:var(--purple-bg); color:var(--purple-fg); }
+  /* 갤러리 보기 방식 */
+  #gallery[data-view="compact"]{ grid-template-columns:repeat(3,1fr); gap:8px; }
+  @media(min-width:640px){ #gallery[data-view="compact"]{ grid-template-columns:repeat(5,1fr); } }
+  @media(min-width:960px){ #gallery[data-view="compact"]{ grid-template-columns:repeat(6,1fr); } }
+  #gallery[data-view="compact"] .card-cap{ padding:6px 7px 7px; }
+  #gallery[data-view="compact"] .card-title{ font-size:11.5px; }
+  #gallery[data-view="compact"] .card-subtags, #gallery[data-view="compact"] .card-pills, #gallery[data-view="compact"] .card-dday{ display:none; }
+  #gallery[data-view="compact"] .lockThumb div:last-child, #gallery[data-view="list"] .lockThumb div:last-child{ display:none; }
+  #gallery[data-view="list"]{ grid-template-columns:1fr; gap:8px; }
+  @media(min-width:960px){ #gallery[data-view="list"]{ grid-template-columns:repeat(2,1fr); } }
+  #gallery[data-view="list"] .card{ display:flex; align-items:stretch; }
+  #gallery[data-view="list"] .card-thumb{ width:96px; flex-shrink:0; }
+  #gallery[data-view="list"] .card-cap{ flex:1; min-width:0; border-top:none; border-left:1px solid var(--border); display:flex; flex-direction:column; justify-content:center; }
+  #gallery[data-view="list"] .accessBadge{ top:4px; right:auto; left:4px; font-size:9.5px; padding:1px 5px; }
+  /* 여러 글 선택 */
+  .selCheck{ position:absolute; top:6px; left:6px; z-index:5; width:22px; height:22px; border-radius:50%; border:2px solid #fff; background:rgba(0,0,0,0.35); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; pointer-events:none; }
+  .card.selected{ outline:2px solid var(--purple-fg); outline-offset:-2px; }
+  .card.selected .selCheck{ background:var(--purple-fg); }
+  .selectBar{ position:fixed; left:0; right:0; bottom:0; z-index:60; background:var(--surface); border-top:1px solid var(--border); padding:10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); display:flex; flex-wrap:wrap; gap:7px; box-shadow:0 -4px 16px rgba(0,0,0,0.12); }
+  .selectBar .selCount{ flex:1 1 100%; font-size:12.5px; font-weight:600; color:var(--text); }
+  .selectBar .btn{ flex:1 1 0; min-width:0; padding:9px 4px; font-size:12.5px; }
+  body.selecting #gallery{ padding-bottom:140px; }
+  /* 이미지 확대(라이트박스) 넘기기 */
+  #lightboxModal{ align-items:center; }
+  #lightboxModal .modal{ overflow:visible; }
+  .lbNav{ position:absolute; top:50%; transform:translateY(-50%); z-index:3; width:38px; height:38px; border-radius:50%; border:none; background:rgba(0,0,0,0.5); color:#fff; font-size:22px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .lbPrev{ left:6px; } .lbNext{ right:6px; }
+  #lightboxModal.hideNav .lbNav{ display:none; }
+  #lightboxImg{ cursor:pointer; }
+  .lbCount{ text-align:center; color:#fff; font-size:12.5px; margin-top:10px; opacity:0.85; }
+  #lightboxImg{ touch-action:pan-y; }
   .hidden{ display:none !important; }
 </style>
 </head>
@@ -414,6 +458,11 @@
         <option value="name">이름순</option>
       </select>
       <div class="icon-btn searchSortBtn" id="reorderToggleBtn" onclick="toggleReorderMode()" title="갤러리 순서 변경">⇅</div>
+    </div>
+    <div class="toolRow" id="toolRow">
+      <div class="toolChips" id="accessChips"></div>
+      <button class="toolBtn" id="viewToggleBtn" onclick="cycleViewMode()">보기: 기본</button>
+      <button class="toolBtn hidden" id="selectToggleBtn" onclick="toggleSelectMode()">선택</button>
     </div>
     <div class="filterLabel">태그로 보기</div>
     <div id="filterScroll" class="filterScroll"></div>
@@ -644,6 +693,20 @@
   </div>
 </div>
 
+<!-- 암호 입력 모달 -->
+<div class="modalBg" id="lockModal">
+  <div class="modal">
+    <button class="closeX" onclick="closeModal('lockModal')">✕</button>
+    <h2>🔒 암호가 걸린 게시글</h2>
+    <div class="sub" id="lockModalTitle">암호를 입력하면 볼 수 있어요.</div>
+    <div class="boxed">
+      <div class="prop"><div class="prop-label">암호</div><div class="prop-body"><input type="password" id="lockPwInput" placeholder="암호 입력" autocomplete="off" onkeydown="if(event.key==='Enter') submitUnlock()"></div></div>
+    </div>
+    <div class="lockErr" id="lockErr"></div>
+    <div class="btnRow"><button class="btn btn-primary" id="lockSubmitBtn" onclick="submitUnlock()">열기</button></div>
+  </div>
+</div>
+
 <!-- 추가/수정 모달 -->
 <div class="modalBg" id="uploadModal">
   <div class="modal">
@@ -753,6 +816,21 @@
 
     <div class="boxed" style="margin-top:10px;">
       <div class="prop">
+        <div class="prop-label">공개 설정</div>
+        <div class="prop-body">
+          <label class="accessOpt"><input type="radio" name="upAccess" value="public" checked onchange="onAccessChange()"> 전체 공개</label>
+          <label class="accessOpt"><input type="radio" name="upAccess" value="locked" onchange="onAccessChange()"> 🔒 암호 걸기 (암호를 아는 사람만 열람)</label>
+          <label class="accessOpt"><input type="radio" name="upAccess" value="private" onchange="onAccessChange()"> 비공개 (나만 보기)</label>
+          <div id="upLockPwWrap" class="hidden" style="margin-top:6px;">
+            <input type="text" id="upLockPw" placeholder="이 게시글의 암호" autocomplete="off">
+          </div>
+          <div class="miniHint" id="upAccessHint"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="boxed" style="margin-top:10px;">
+      <div class="prop">
         <div class="prop-label">배너 이미지</div>
         <div class="prop-body">
           <div id="upBannerList"></div>
@@ -853,7 +931,55 @@
 <div class="modalBg" id="lightboxModal">
   <div class="modal">
     <button class="closeX" onclick="closeModal('lightboxModal')">✕</button>
+    <button class="lbNav lbPrev hidden" id="lbPrev" onclick="lightboxStep(-1)">‹</button>
     <img id="lightboxImg">
+    <button class="lbNav lbNext hidden" id="lbNext" onclick="lightboxStep(1)">›</button>
+    <div class="lbCount hidden" id="lbCount"></div>
+  </div>
+</div>
+
+<!-- 여러 글 선택: 하단 작업 바 -->
+<div class="selectBar hidden" id="selectBar">
+  <div class="selCount" id="selCount">0개 선택됨</div>
+  <button class="btn btn-ghost" onclick="selectAllVisible()">전체</button>
+  <button class="btn btn-ghost" onclick="openBulkAccess()">공개 설정</button>
+  <button class="btn btn-ghost" onclick="openBulkCategory()">카테고리</button>
+  <button class="btn btn-ghost" style="color:#d6336c;" onclick="bulkDelete()">삭제</button>
+  <button class="btn btn-ghost" onclick="toggleSelectMode()">취소</button>
+</div>
+
+<!-- 선택한 글 공개 설정 일괄 변경 -->
+<div class="modalBg" id="bulkAccessModal">
+  <div class="modal">
+    <button class="closeX" onclick="closeModal('bulkAccessModal')">✕</button>
+    <h2>공개 설정 일괄 변경</h2>
+    <div class="sub" id="bulkAccessSub">선택한 글의 공개 설정을 한 번에 바꿔요.</div>
+    <div class="boxed">
+      <div class="prop"><div class="prop-body">
+        <label class="accessOpt"><input type="radio" name="bulkAccess" value="public" checked onchange="onBulkAccessChange()"> 전체 공개</label>
+        <label class="accessOpt"><input type="radio" name="bulkAccess" value="locked" onchange="onBulkAccessChange()"> 🔒 암호 걸기 (선택한 글 모두 같은 암호)</label>
+        <label class="accessOpt"><input type="radio" name="bulkAccess" value="private" onchange="onBulkAccessChange()"> 비공개 (나만 보기)</label>
+        <div id="bulkPwWrap" class="hidden" style="margin-top:6px;"><input type="text" id="bulkPw" placeholder="암호 입력" autocomplete="off"></div>
+      </div></div>
+    </div>
+    <div class="btnRow"><button class="btn btn-primary" id="bulkAccessBtn" onclick="applyBulkAccess()">적용</button></div>
+  </div>
+</div>
+
+<!-- 선택한 글 카테고리 일괄 추가/제거 -->
+<div class="modalBg" id="bulkCatModal">
+  <div class="modal">
+    <button class="closeX" onclick="closeModal('bulkCatModal')">✕</button>
+    <h2>카테고리 일괄 변경</h2>
+    <div class="sub" id="bulkCatSub">선택한 글에 카테고리를 한 번에 넣거나 빼요.</div>
+    <div class="boxed">
+      <div class="prop"><div class="prop-body">
+        <label class="accessOpt"><input type="radio" name="bulkCatMode" value="add" checked> 추가</label>
+        <label class="accessOpt"><input type="radio" name="bulkCatMode" value="remove"> 제거</label>
+        <input type="text" id="bulkCatInput" placeholder="쉼표로 구분 (예: CAVEDUCK, ARCH)" autocomplete="off" style="margin-top:6px;">
+      </div></div>
+    </div>
+    <div class="btnRow"><button class="btn btn-primary" id="bulkCatBtn" onclick="applyBulkCategory()">적용</button></div>
   </div>
 </div>
 
@@ -916,6 +1042,9 @@ function requireWriteAccess(){
   return false;
 }
 let db = null;
+let privateReady = true;    // site_private 테이블 사용 가능 여부 (주인장에게만 의미 있음)
+let privateLoaded = false;  // 주인장 로그인 상태로 비공개 글까지 불러왔는지
+const unlocked = {};        // 암호 풀어서 열어본 게시글 (메모리에만 보관, 새로고침하면 사라짐)
 let currentTagFilter = null;
 let currentSearchQuery = '';
 let currentSort = 'default'; // 'default' | 'newest' | 'oldest' | 'name'
@@ -964,7 +1093,7 @@ function fallbackCopy(str){
   }catch(e){ toast('복사에 실패했어요'); }
 }
 function copyEntryField(catKey){
-  const img = db.images.find(i=>i.id===currentDetailId);
+  const img = resolveEntry(db.images.find(i=>i.id===currentDetailId));
   if(!img) return;
   copyText((img.tags[catKey]||[]).join(', '));
 }
@@ -1114,10 +1243,60 @@ function normalizeDbDefaults(){
   });
 }
 
+
+/* ============ 비공개 · 암호 글 ============
+   - 전체 공개  : sites.data 에 그대로 저장 (누구나 볼 수 있음)
+   - 비공개     : sites.data 에는 아예 넣지 않고, 주인장만 읽을 수 있는 site_private 테이블에만 저장
+   - 암호 걸기  : sites.data 에는 암호화된 덩어리(제목만 평문)만 저장, 주인장은 site_private 에 원본도 보관
+                  → 방문자는 암호를 풀기 전에는 제목 외 아무 내용(이미지 주소 포함)도 알 수 없어요. */
+const PBKDF2_ITER = 150000;
+function bytesToB64(buf){
+  const bytes = new Uint8Array(buf); let bin = '';
+  for(let i=0;i<bytes.length;i+=0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i+0x8000));
+  return btoa(bin);
+}
+function b64ToBytes(b64){
+  const bin = atob(b64); const out = new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+async function deriveLockKey(password, salt){
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2', salt, iterations:PBKDF2_ITER, hash:'SHA-256'}, base, {name:'AES-GCM', length:256}, false, ['encrypt','decrypt']);
+}
+async function encryptEntry(entry, password){
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await deriveLockKey(password, salt);
+  const plain = new TextEncoder().encode(JSON.stringify(entry));
+  const ct = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, plain);
+  return { v:1, salt:bytesToB64(salt), iv:bytesToB64(iv), ct:bytesToB64(ct) };
+}
+async function decryptEntry(enc, password){
+  const key = await deriveLockKey(password, b64ToBytes(enc.salt));
+  const plain = await crypto.subtle.decrypt({name:'AES-GCM', iv:b64ToBytes(enc.iv)}, key, b64ToBytes(enc.ct));
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+const lockCache = new Map(); // id -> {sig, enc}  (바뀌지 않은 글은 매번 다시 암호화하지 않도록)
+async function makeLockedStub(entry){
+  const pw = entry.lockPassword || '';
+  if(!pw) throw new Error(`"${entry.title||'제목 없음'}" 글의 암호가 비어 있어요`);
+  const body = Object.assign({}, entry); delete body.lockPassword;
+  const sig = JSON.stringify(body) + '\u0000' + pw;
+  let c = lockCache.get(entry.id);
+  if(!c || c.sig !== sig){ c = { sig, enc: await encryptEntry(body, pw) }; lockCache.set(entry.id, c); }
+  return { id:entry.id, locked:true, title:entry.title||'', pinned:!!entry.pinned, heartColor:entry.heartColor||'', createdAt:entry.createdAt||'', enc:c.enc };
+}
+function entryAccess(e){ return (e && e.access) || 'public'; }
+function isHiddenEntry(e){ return entryAccess(e) !== 'public'; }
+/* 방문자 화면용: 암호를 이미 푼 글이면 풀린 내용으로 바꿔서 돌려준다 */
+function resolveEntry(e){ return (e && e.locked && unlocked[e.id]) ? unlocked[e.id] : e; }
+
 /* ============ DB (Supabase의 sites 테이블) ============ */
 async function loadDB(){
   const slug = getSlugFromUrl();
-  const { data: row, error } = await sb.from('sites').select('id,user_id,slug,data').eq('slug', slug).maybeSingle();
+  privateLoaded = false;
+  const { data: row, error } = await sb.from('sites').select('id,user_id,slug,data,updated_at').eq('slug', slug).maybeSingle();
   if(error) throw new Error('불러오기 실패: ' + error.message);
   if(!row){
     db = emptySiteData();
@@ -1125,16 +1304,75 @@ async function loadDB(){
     return;
   }
   db = row.data || emptySiteData();
-  currentSite = { id: row.id, ownerId: row.user_id, slug: row.slug };
+  currentSite = { id: row.id, ownerId: row.user_id, slug: row.slug, updatedAt: row.updated_at || null };
+  if(!db.images) db.images = [];
+
+  /* 주인장 본인이 보는 경우에만 비공개/암호 글 원본을 합쳐서 불러온다 */
+  if(currentUser && row.user_id === currentUser.id){
+    const { data: priv, error: perr } = await sb.from('site_private').select('data').eq('user_id', currentUser.id).maybeSingle();
+    if(perr){
+      privateReady = false;   /* 테이블이 아직 없는 경우 등 → 비공개 기능 잠시 막기 */
+    }else{
+      privateReady = true;
+      const list = ((priv && priv.data && priv.data.entries) || []).slice().sort((a,b)=>a.pos-b.pos);
+      const privIds = new Set(list.map(x=>x.entry.id));
+      db.images = db.images.filter(e => !e.locked && !privIds.has(e.id));   /* 암호 글 껍데기·중복 제거 */
+      list.forEach(x=>{ db.images.splice(Math.min(x.pos, db.images.length), 0, x.entry); });
+    }
+    privateLoaded = true;
+  }
   normalizeDbDefaults();
 }
 async function saveDB(){
   if(!currentUser) throw new Error('로그인이 필요해요');
   if(currentSite.ownerId && currentSite.ownerId !== currentUser.id) throw new Error('본인 갤러리만 수정할 수 있어요');
-  const payload = { user_id: currentUser.id, slug: currentSite.slug, data: db, updated_at: new Date().toISOString() };
-  const { data, error } = await sb.from('sites').upsert(payload, { onConflict:'user_id' }).select().maybeSingle();
-  if(error) throw new Error('저장 실패: ' + error.message);
-  currentSite.id = data.id; currentSite.ownerId = data.user_id;
+
+  /* 저장 충돌 방지: 내가 불러온 뒤에 다른 기기/탭이 먼저 저장했다면 덮어쓰지 않고 멈춘다 */
+  if(currentSite.id){
+    const { data: cur, error: cerr } = await sb.from('sites').select('updated_at').eq('user_id', currentUser.id).maybeSingle();
+    if(cerr) throw new Error('저장 전 확인 실패: ' + cerr.message);
+    if(cur && (cur.updated_at || null) !== (currentSite.updatedAt || null)) await handleSaveConflict();
+  }
+  const pubImages = [], privEntries = [];
+  for(let idx=0; idx<db.images.length; idx++){
+    const e = db.images[idx];
+    const acc = entryAccess(e);
+    if(acc === 'public'){ pubImages.push(e); continue; }
+    privEntries.push({ pos: idx, entry: e });
+    if(acc === 'locked') pubImages.push(await makeLockedStub(e));
+  }
+  if(!privateReady && privEntries.length){
+    throw new Error('비공개/암호 글 저장 공간(site_private)이 아직 없어요. supabase_private.sql을 먼저 실행해주세요');
+  }
+  /* ① 비공개 원본 먼저 저장 → ② 공개용 데이터 저장 */
+  if(privateReady){
+    const { error: perr } = await sb.from('site_private').upsert(
+      { user_id: currentUser.id, data: { entries: privEntries }, updated_at: new Date().toISOString() },
+      { onConflict:'user_id' });
+    if(perr) throw new Error('비공개 글 저장 실패: ' + perr.message);
+  }
+  const publicData = Object.assign({}, db, { images: pubImages });
+  const nowIso = new Date().toISOString();
+  if(currentSite.id){
+    /* 내가 불러온 시점 그대로일 때만 업데이트 (그 사이 바뀌었으면 0건 → 충돌) */
+    let q = sb.from('sites').update({ data: publicData, updated_at: nowIso }).eq('user_id', currentUser.id);
+    q = currentSite.updatedAt ? q.eq('updated_at', currentSite.updatedAt) : q.is('updated_at', null);
+    const { data: rows, error } = await q.select('id,user_id,updated_at');
+    if(error) throw new Error('저장 실패: ' + error.message);
+    if(!rows || rows.length === 0) await handleSaveConflict();
+    currentSite.updatedAt = rows[0].updated_at;
+  }else{
+    const payload = { user_id: currentUser.id, slug: currentSite.slug, data: publicData, updated_at: nowIso };
+    const { data, error } = await sb.from('sites').upsert(payload, { onConflict:'user_id' }).select().maybeSingle();
+    if(error) throw new Error('저장 실패: ' + error.message);
+    currentSite.id = data.id; currentSite.ownerId = data.user_id; currentSite.updatedAt = data.updated_at || null;
+  }
+}
+async function handleSaveConflict(){
+  if(confirm('다른 기기(또는 다른 탭)에서 이 갤러리를 먼저 수정했어요.\n덮어쓰기를 막기 위해 저장하지 않았어요.\n\n지금 새로고침해서 최신 내용을 불러올까요?\n(확인 = 새로고침 / 취소 = 이 화면 유지)')){
+    location.reload();
+  }
+  throw new Error('다른 곳에서 먼저 수정돼서 저장하지 않았어요. 새로고침 후 다시 시도해주세요');
 }
 
 /* ============ 전체 백업(다운로드/적용, 이미지 포함) ============
@@ -1280,26 +1518,43 @@ async function refreshAll(){
   catch(e){ toast(e.message || '불러오기 중 오류가 발생했어요'); }
   updateAccountUI();
 }
-/* 신규 가입자에게만 물어보는 초대 비밀번호. 기존에 이미 갤러리를 만든
-   사람은 이 검사를 건너뛰고 바로 들어가요.
-   signupGateChecked: 로그인 상태 갱신 이벤트가 여러 번 울려도(브라우저 탭 전환,
-   토큰 갱신 등) 비밀번호 팝업이 중복으로 뜨지 않게 막는 플래그예요. */
-const SIGNUP_GATE_PASSWORD = 'qR7xK2mZ9pL';
+/* 신규 가입자에게만 물어보는 초대코드. 확인은 서버(Supabase 함수)에서 해요.
+   기존에 이미 갤러리를 만든 사람은 이 검사를 건너뛰고 바로 들어가요.
+   signupGateChecked: 로그인 상태 갱신 이벤트가 여러 번 울려도 팝업이 중복으로 뜨지 않게 막는 플래그예요. */
 let signupGateChecked = false;
+async function checkInviteOnServer(){
+  const { data: has, error: e1 } = await sb.rpc('has_invite');
+  if(e1) throw new Error('가입 확인 기능이 아직 준비되지 않았어요. 관리자에게 문의해주세요');
+  if(has) return true;
+  const val = window.prompt('처음 오셨네요! 초대 비밀번호를 입력해주세요.');
+  if(!val) return false;
+  const { data: ok, error: e2 } = await sb.rpc('redeem_invite', { code: val.trim() });
+  if(e2) throw new Error(e2.message || '확인 중 오류가 났어요');
+  return !!ok;
+}
 
 async function onAuthChange(){
+  if(currentUser && currentSite && currentSite.ownerId === currentUser.id && !privateLoaded){
+    try{ await loadDB(); renderProfile(); applyTheme(); renderFilters(); renderGallery(); }catch(e){ /* 무시 */ }
+  }
   document.getElementById('fabBtn').classList.toggle('hidden', !hasWriteAccess());
   updateAccountUI();
   if(currentUser){
-    const { data: mySite } = await sb.from('sites').select('slug').eq('user_id', currentUser.id).maybeSingle();
+    const { data: mySite, error: mySiteError } = await sb.from('sites').select('slug').eq('user_id', currentUser.id).maybeSingle();
+    if(mySiteError){
+      toast('내 갤러리 확인 실패: ' + mySiteError.message);
+      return; // 조회 오류를 신규 회원으로 오인해 로그아웃시키지 않음
+    }
     myOwnSlug = mySite ? mySite.slug : null;
     if(!mySite && !signupGateChecked){
       signupGateChecked = true;
-      const val = window.prompt('처음 오셨네요! 초대 비밀번호를 입력해주세요.');
-      if(val === SIGNUP_GATE_PASSWORD){
+      let passed = false;
+      try{ passed = await checkInviteOnServer(); }
+      catch(e){ toast(e.message || '확인 중 오류가 났어요'); }
+      if(passed){
         openOnboardModal();
       }else{
-        toast('비밀번호가 올바르지 않아 로그아웃할게요');
+        toast('초대 비밀번호가 올바르지 않아 로그아웃할게요');
         await sb.auth.signOut();
         currentUser = null;
         myOwnSlug = null;
@@ -2278,6 +2533,7 @@ function openEntryForm(id){
     (img.category||[]).forEach(tag=>{
       selectedCategoryColors[tag] = (img.categoryColors && img.categoryColors[tag]) || img.categoryColor || 'catPurple';
     });
+    setAccessForm(entryAccess(img), img.lockPassword || '');
   }else{
     titleEl.textContent = '이미지 추가';
     preview.classList.add('hidden');
@@ -2292,6 +2548,7 @@ function openEntryForm(id){
     document.getElementById('upMemoHeartIcon').style.color = hc;
     document.getElementById('upHeartColorLabel').style.color = hc;
     selectedCategoryColors = {};
+    setAccessForm('public', '');
   }
   updateCombinedPreview();
   renderCatchphraseEditor();
@@ -2439,9 +2696,28 @@ function renderExtraImagesEditor(){
   }
 }
 
+function setAccessForm(access, pw){
+  const r = document.querySelector(`input[name="upAccess"][value="${access}"]`);
+  if(r) r.checked = true;
+  document.getElementById('upLockPw').value = pw || '';
+  onAccessChange();
+}
+function onAccessChange(){
+  const v = (document.querySelector('input[name="upAccess"]:checked')||{}).value || 'public';
+  document.getElementById('upLockPwWrap').classList.toggle('hidden', v !== 'locked');
+  const hint = document.getElementById('upAccessHint');
+  hint.textContent = v === 'private' ? '나만 볼 수 있어요. 다른 사람에게는 갤러리에 아예 나타나지 않아요.'
+    : v === 'locked' ? '갤러리에는 제목만 🔒로 보이고, 암호를 입력해야 내용과 이미지를 볼 수 있어요.'
+    : '누구나 볼 수 있어요.';
+  if(v !== 'public' && !privateReady) hint.textContent = '⚠ 비공개/암호 기능을 쓰려면 supabase_private.sql을 먼저 실행해야 해요.';
+}
 async function submitEntry(){
   if(!requireWriteAccess()) return;
   if(!isEditingId && !pendingUploadFile){ toast('이미지를 선택해주세요'); return; }
+  const accessVal = (document.querySelector('input[name="upAccess"]:checked')||{}).value || 'public';
+  const lockPwVal = document.getElementById('upLockPw').value.trim();
+  if(accessVal === 'locked' && !lockPwVal){ toast('암호를 입력해주세요'); return; }
+  if(accessVal !== 'public' && !privateReady){ toast('비공개/암호 저장 공간이 아직 없어요. supabase_private.sql을 먼저 실행해주세요'); return; }
   const btn = document.getElementById('uploadSaveBtn');
   btn.disabled = true;
   try{
@@ -2529,8 +2805,10 @@ async function submitEntry(){
       banners: finalBanners,
       extraImages: finalExtra,
       pinned: prevPinned,
-      createdAt
+      createdAt,
+      access: accessVal
     };
+    if(accessVal === 'locked') entryData.lockPassword = lockPwVal;
 
     if(isEditingId){
       const idx = db.images.findIndex(i=>i.id===id);
@@ -2594,7 +2872,8 @@ function renderFilters(){
 /* ============ 갤러리 순서 변경 ============ */
 function toggleReorderMode(){
   if(!reorderMode){
-    if(currentTagFilter || currentSearchQuery){ toast('필터/검색을 해제한 뒤 순서를 바꿔주세요'); return; }
+    if(selectMode){ toast('선택 모드를 먼저 끝내주세요'); return; }
+    if(currentTagFilter || currentSearchQuery || currentAccessFilter !== 'all'){ toast('필터/검색을 해제한 뒤 순서를 바꿔주세요'); return; }
     if(!db || db.images.length < 2){ toast('순서를 바꿀 이미지가 부족해요'); return; }
     reorderMode = true;
     document.getElementById('reorderToggleBtn').classList.add('active-reorder');
@@ -2653,6 +2932,230 @@ function updateDetailPinBtn(pinned){
   btn.textContent = pinned ? '♥ 고정 해제' : '♡ 상단 고정';
 }
 
+/* ============ 갤러리 보기 방식 / 공개 상태 필터 / 여러 글 선택 ============ */
+const VIEW_MODES = [{k:'auto', l:'보기: 기본'}, {k:'compact', l:'보기: 작게'}, {k:'list', l:'보기: 목록'}];
+let viewMode = 'auto';
+try{ const v = localStorage.getItem('galleryViewMode'); if(VIEW_MODES.some(m=>m.k===v)) viewMode = v; }catch(e){}
+function applyViewMode(){
+  document.getElementById('gallery').dataset.view = viewMode;
+  document.getElementById('viewToggleBtn').textContent = VIEW_MODES.find(m=>m.k===viewMode).l;
+}
+function cycleViewMode(){
+  const i = VIEW_MODES.findIndex(m=>m.k===viewMode);
+  viewMode = VIEW_MODES[(i+1) % VIEW_MODES.length].k;
+  try{ localStorage.setItem('galleryViewMode', viewMode); }catch(e){}
+  renderGallery();
+}
+
+let currentAccessFilter = 'all';   // 'all' | 'public' | 'locked' | 'private'  (주인장만)
+function renderToolRow(){
+  const owner = hasWriteAccess();
+  document.getElementById('selectToggleBtn').classList.toggle('hidden', !owner);
+  const wrap = document.getElementById('accessChips');
+  wrap.innerHTML = '';
+  if(!owner){ currentAccessFilter = 'all'; return; }
+  const counts = { all: db.images.length, public:0, locked:0, private:0 };
+  db.images.forEach(e=>{ counts[entryAccess(e)]++; });
+  if(currentAccessFilter !== 'all' && counts[currentAccessFilter] === 0) currentAccessFilter = 'all';
+  if(counts.locked + counts.private === 0) return;   /* 숨긴 글이 하나도 없으면 필터 칩은 안 보여요 */
+  [['all','전체'],['public','공개'],['locked','🔒 암호'],['private','비공개']].forEach(([k,label])=>{
+    const chip = document.createElement('div');
+    chip.className = 'chip sm' + (currentAccessFilter === k ? ' active' : '');
+    chip.textContent = `${label} ${counts[k]}`;
+    chip.onclick = ()=>{ currentAccessFilter = k; renderGallery(); };
+    wrap.appendChild(chip);
+  });
+}
+
+let selectMode = false;
+const selectedIds = new Set();
+let lastVisibleIds = [];
+function updateSelectBar(){
+  document.getElementById('selCount').textContent = `${selectedIds.size}개 선택됨`;
+}
+function toggleSelectMode(){
+  if(!selectMode){
+    if(!requireWriteAccess()) return;
+    if(reorderMode){ toast('순서 변경을 먼저 끝내주세요'); return; }
+    selectMode = true; selectedIds.clear();
+  }else{
+    selectMode = false; selectedIds.clear();
+  }
+  document.body.classList.toggle('selecting', selectMode);
+  document.getElementById('selectToggleBtn').classList.toggle('on', selectMode);
+  document.getElementById('selectToggleBtn').textContent = selectMode ? '선택 끝' : '선택';
+  document.getElementById('selectBar').classList.toggle('hidden', !selectMode);
+  document.getElementById('fabBtn').classList.toggle('hidden', selectMode || !hasWriteAccess());
+  updateSelectBar();
+  renderGallery();
+}
+function toggleSelect(id, cardEl){
+  if(selectedIds.has(id)) selectedIds.delete(id); else selectedIds.add(id);
+  const on = selectedIds.has(id);
+  cardEl.classList.toggle('selected', on);
+  const chk = cardEl.querySelector('.selCheck'); if(chk) chk.textContent = on ? '✓' : '';
+  updateSelectBar();
+}
+function selectAllVisible(){
+  const allOn = lastVisibleIds.length && lastVisibleIds.every(id=>selectedIds.has(id));
+  lastVisibleIds.forEach(id=>{ if(allOn) selectedIds.delete(id); else selectedIds.add(id); });
+  updateSelectBar(); renderGallery();
+}
+function selectedEntries(){ return db.images.filter(e=>selectedIds.has(e.id)); }
+function needSelection(){ if(!selectedIds.size){ toast('먼저 글을 선택해주세요'); return false; } return true; }
+
+function openBulkAccess(){
+  if(!needSelection()) return;
+  document.getElementById('bulkAccessSub').textContent = `선택한 ${selectedIds.size}개 글의 공개 설정을 한 번에 바꿔요.`;
+  document.querySelector('input[name="bulkAccess"][value="public"]').checked = true;
+  document.getElementById('bulkPw').value = '';
+  onBulkAccessChange();
+  document.getElementById('bulkAccessModal').classList.add('show');
+}
+function onBulkAccessChange(){
+  const v = document.querySelector('input[name="bulkAccess"]:checked').value;
+  document.getElementById('bulkPwWrap').classList.toggle('hidden', v !== 'locked');
+}
+async function applyBulkAccess(){
+  if(!requireWriteAccess() || !needSelection()) return;
+  const v = document.querySelector('input[name="bulkAccess"]:checked').value;
+  const pw = document.getElementById('bulkPw').value.trim();
+  if(v === 'locked' && !pw){ toast('암호를 입력해주세요'); return; }
+  if(v !== 'public' && !privateReady){ toast('비공개/암호 저장 공간이 아직 없어요. supabase_private.sql을 먼저 실행해주세요'); return; }
+  const targets = selectedEntries();
+  const snap = targets.map(e=>({ e, access:e.access, pw:e.lockPassword }));
+  targets.forEach(e=>{ e.access = v; if(v === 'locked') e.lockPassword = pw; else delete e.lockPassword; });
+  const btn = document.getElementById('bulkAccessBtn'); btn.disabled = true;
+  try{
+    toast('저장 중...');
+    await saveDB();
+    closeModal('bulkAccessModal');
+    toast(`${targets.length}개 글의 공개 설정을 바꿨어요`);
+    toggleSelectMode();
+  }catch(err){
+    snap.forEach(x=>{
+      if(x.access === undefined) delete x.e.access; else x.e.access = x.access;
+      if(x.pw === undefined) delete x.e.lockPassword; else x.e.lockPassword = x.pw;
+    });
+    toast(err.message || '저장 실패');
+  }finally{ btn.disabled = false; renderFilters(); renderGallery(); }
+}
+
+function openBulkCategory(){
+  if(!needSelection()) return;
+  document.getElementById('bulkCatSub').textContent = `선택한 ${selectedIds.size}개 글에 카테고리를 한 번에 넣거나 빼요.`;
+  document.querySelector('input[name="bulkCatMode"][value="add"]').checked = true;
+  document.getElementById('bulkCatInput').value = '';
+  document.getElementById('bulkCatModal').classList.add('show');
+}
+function knownCategoryColor(tag){
+  for(const e of db.images){ if(e.categoryColors && e.categoryColors[tag]) return e.categoryColors[tag]; }
+  return 'catPurple';
+}
+async function applyBulkCategory(){
+  if(!requireWriteAccess() || !needSelection()) return;
+  const mode = document.querySelector('input[name="bulkCatMode"]:checked').value;
+  const tags = splitTags(document.getElementById('bulkCatInput').value);
+  if(!tags.length){ toast('카테고리를 입력해주세요'); return; }
+  const targets = selectedEntries();
+  const snap = targets.map(e=>({ e, category: JSON.stringify(e.category||[]), colors: JSON.stringify(e.categoryColors||{}) }));
+  targets.forEach(e=>{
+    e.category = e.category || []; e.categoryColors = e.categoryColors || {};
+    if(mode === 'add'){
+      tags.forEach(t=>{ if(!e.category.includes(t)){ e.category.push(t); e.categoryColors[t] = knownCategoryColor(t); } });
+    }else{
+      e.category = e.category.filter(c=>!tags.includes(c));
+      tags.forEach(t=>{ delete e.categoryColors[t]; });
+    }
+  });
+  const btn = document.getElementById('bulkCatBtn'); btn.disabled = true;
+  try{
+    toast('저장 중...');
+    await saveDB();
+    closeModal('bulkCatModal');
+    toast(`${targets.length}개 글의 카테고리를 ${mode === 'add' ? '추가' : '제거'}했어요`);
+    toggleSelectMode();
+  }catch(err){
+    snap.forEach(x=>{ x.e.category = JSON.parse(x.category); x.e.categoryColors = JSON.parse(x.colors); });
+    toast(err.message || '저장 실패');
+  }finally{ btn.disabled = false; renderFilters(); renderGallery(); }
+}
+
+async function bulkDelete(){
+  if(!requireWriteAccess() || !needSelection()) return;
+  const n = selectedIds.size;
+  if(!confirm(`선택한 ${n}개 글을 완전히 삭제할까요? 되돌릴 수 없어요.`)) return;
+  const targets = selectedEntries();
+  const prev = db.images.slice();
+  db.images = db.images.filter(e=>!selectedIds.has(e.id));
+  try{
+    toast('삭제 중...');
+    await saveDB();
+  }catch(err){
+    db.images = prev; toast(err.message || '삭제 실패'); renderFilters(); renderGallery(); return;
+  }
+  /* 저장이 성공한 뒤에 이미지 파일을 지운다 (실패해도 글은 이미 지워져 있어서 안전) */
+  for(const t of targets){
+    const paths = [t.path, ...(t.banners||[]).map(b=>b.path), ...(t.extraImages||[]).map(x=>x.path)];
+    for(const p of paths){ try{ await deleteImageFile(p); }catch(e){ /* 무시 */ } }
+  }
+  toggleSelectMode();
+  renderFilters(); renderGallery();
+  toast(`${n}개 글을 삭제했어요`);
+}
+
+/* ============ 이미지 확대 + 좌우 넘기기 ============ */
+let lbList = [], lbIdx = 0;
+let lbHideNav = false;   /* 이미지를 탭하면 ‹ › 버튼을 숨기고, 다시 탭하면 보여요 (선택은 기억) */
+try{ lbHideNav = localStorage.getItem('lbHideNav') === '1'; }catch(e){}
+function applyLbNavVisibility(){ document.getElementById('lightboxModal').classList.toggle('hideNav', lbHideNav); }
+function toggleLbNav(){
+  lbHideNav = !lbHideNav;
+  try{ localStorage.setItem('lbHideNav', lbHideNav ? '1' : '0'); }catch(e){}
+  applyLbNavVisibility();
+}
+function entryImagePaths(img){
+  const out = [];
+  if(img.path) out.push(img.path);
+  (img.extraImages||[]).forEach(e=>{ if(e.path && !out.includes(e.path)) out.push(e.path); });
+  return out;
+}
+function showLightboxImage(){
+  const img = document.getElementById('lightboxImg');
+  const p = lbList[lbIdx];
+  img.style.opacity = '0.4';
+  loadImageAsync(p, url=>{ if(lbList[lbIdx] === p){ img.src = url; img.style.opacity = '1'; } }, ()=>{ img.style.opacity = '1'; });
+  const multi = lbList.length > 1;
+  document.getElementById('lbPrev').classList.toggle('hidden', !multi);
+  document.getElementById('lbNext').classList.toggle('hidden', !multi);
+  const cnt = document.getElementById('lbCount');
+  cnt.classList.toggle('hidden', !multi);
+  cnt.textContent = `${lbIdx+1} / ${lbList.length}`;
+  if(multi){ [lbIdx-1, lbIdx+1].forEach(k=>{ const q = lbList[(k+lbList.length)%lbList.length]; loadImageAsync(q, ()=>{}); }); }
+}
+function lightboxStep(d){
+  if(lbList.length < 2) return;
+  lbIdx = (lbIdx + d + lbList.length) % lbList.length;
+  showLightboxImage();
+}
+(function setupLightboxSwipe(){
+  const el = document.getElementById('lightboxModal');
+  document.getElementById('lightboxImg').addEventListener('click', toggleLbNav);
+  let sx = 0, sy = 0;
+  el.addEventListener('touchstart', e=>{ if(e.touches.length === 1){ sx = e.touches[0].clientX; sy = e.touches[0].clientY; } }, {passive:true});
+  el.addEventListener('touchend', e=>{
+    if(!e.changedTouches.length) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) lightboxStep(dx < 0 ? 1 : -1);
+  }, {passive:true});
+  document.addEventListener('keydown', e=>{
+    if(!el.classList.contains('show')) return;
+    if(e.key === 'ArrowLeft') lightboxStep(-1);
+    else if(e.key === 'ArrowRight') lightboxStep(1);
+    else if(e.key === 'Escape') closeModal('lightboxModal');
+  });
+})();
+
 /* ============ 갤러리 ============ */
 function guessMime(path){
   const ext = path.split('.').pop().toLowerCase();
@@ -2671,8 +3174,11 @@ let observer = null;
 function renderGallery(){
   const grid = document.getElementById('gallery');
   grid.innerHTML = '';
-  let list = db.images;
+  applyViewMode();
+  renderToolRow();
+  let list = db.images.map(resolveEntry);
   if(!reorderMode){
+    if(currentAccessFilter !== 'all') list = list.filter(img => entryAccess(img) === currentAccessFilter);
     if(currentTagFilter) list = list.filter(img => (img.category||[]).includes(currentTagFilter));
     if(currentSearchQuery){
       const q = currentSearchQuery.toLowerCase();
@@ -2688,6 +3194,7 @@ function renderGallery(){
     }
     list.sort((a,b)=> (b.pinned?1:0) - (a.pinned?1:0));
   }
+  lastVisibleIds = list.map(i=>i.id);
   const emptyHint = document.getElementById('emptyHint');
   if(db.images.length===0){
     emptyHint.innerHTML = '아직 백업된 이미지가 없어요.<br>오른쪽 아래 버튼으로 첫 이미지를 추가해보세요.';
@@ -2716,15 +3223,33 @@ function renderGallery(){
 
   list.forEach((img, idx)=>{
     const card = document.createElement('div');
-    card.className = 'card' + (reorderMode ? ' reordering' : '');
-    card.dataset.id = img.id; card.dataset.path = img.path;
-    if(!reorderMode) card.onclick = ()=> openDetail(img.id);
+    card.className = 'card' + (reorderMode ? ' reordering' : '') + (selectMode && selectedIds.has(img.id) ? ' selected' : '');
+    card.dataset.id = img.id; card.dataset.path = img.path || '';
+    if(!reorderMode) card.onclick = ()=> selectMode ? toggleSelect(img.id, card) : openDetail(img.id);
 
     const thumb = document.createElement('div');
     thumb.className = 'card-thumb';
-    const ph = document.createElement('div'); ph.className = 'ph';
-    thumb.appendChild(ph);
-    if(img.pinned && !reorderMode){
+    const isLockedStub = !!img.locked;   /* 방문자 화면에서 아직 암호를 안 푼 글 */
+    if(isLockedStub){
+      const lk = document.createElement('div'); lk.className = 'lockThumb';
+      lk.innerHTML = '<div class="lockIco">🔒</div><div>암호가 필요해요</div>';
+      thumb.appendChild(lk);
+    }else{
+      const ph = document.createElement('div'); ph.className = 'ph';
+      thumb.appendChild(ph);
+    }
+    const accessLabel = isLockedStub ? '' : (entryAccess(img) === 'private' ? '비공개' : entryAccess(img) === 'locked' ? '🔒 암호' : '');
+    if(accessLabel){
+      const ab = document.createElement('div'); ab.className = 'accessBadge'; ab.textContent = accessLabel;
+      thumb.appendChild(ab);
+    }
+    if(selectMode){
+      const chk = document.createElement('div');
+      chk.className = 'selCheck';
+      chk.textContent = selectedIds.has(img.id) ? '✓' : '';
+      thumb.appendChild(chk);
+    }
+    if(img.pinned && !reorderMode && !selectMode){
       const pinBadge = document.createElement('div');
       pinBadge.className = 'pinBadge';
       pinBadge.textContent = '♥';
@@ -2798,7 +3323,7 @@ function renderGallery(){
     }
     card.appendChild(cap);
     grid.appendChild(card);
-    observer.observe(card);
+    if(!isLockedStub) observer.observe(card);
   });
 }
 let rateLimitWarned = false;
@@ -2847,8 +3372,12 @@ function renderTagPills(containerId, tags, catClass){
   });
 }
 function openLightbox(path){
-  const img = document.getElementById('lightboxImg');
-  loadImageAsync(path, url=>{ img.src = url; });
+  const cur = currentDetailId ? resolveEntry(db.images.find(i=>i.id===currentDetailId)) : null;
+  lbList = cur ? entryImagePaths(cur) : [];
+  lbIdx = lbList.indexOf(path);
+  if(lbIdx < 0){ lbList = [path]; lbIdx = 0; }
+  showLightboxImage();
+  applyLbNavVisibility();
   document.getElementById('lightboxModal').classList.add('show');
 }
 function renderDetailExtraImages(list){
@@ -2925,9 +3454,45 @@ function renderDetailExtraImages(list){
     wrap.appendChild(grid);
   }
 }
+/* ============ 암호 글 열기 (방문자) ============ */
+let lockTargetId = null;
+function openLockModal(id){
+  const stub = db.images.find(i=>i.id===id);
+  if(!stub) return;
+  lockTargetId = id;
+  document.getElementById('lockModalTitle').textContent = `"${stub.title || '제목 없음'}" 글을 보려면 암호를 입력하세요.`;
+  document.getElementById('lockPwInput').value = '';
+  document.getElementById('lockErr').textContent = '';
+  document.getElementById('lockModal').classList.add('show');
+  setTimeout(()=>document.getElementById('lockPwInput').focus(), 50);
+}
+async function submitUnlock(){
+  const stub = db.images.find(i=>i.id===lockTargetId);
+  const pw = document.getElementById('lockPwInput').value;
+  if(!stub || !pw) return;
+  const btn = document.getElementById('lockSubmitBtn');
+  btn.disabled = true;
+  try{
+    const entry = await decryptEntry(stub.enc, pw);
+    entry.tags = entry.tags || {appearance:[], outfit:[]};
+    entry.tags.appearance = entry.tags.appearance || [];
+    entry.tags.outfit = entry.tags.outfit || [];
+    entry.extraImages = entry.extraImages || [];
+    unlocked[stub.id] = entry;
+    closeModal('lockModal');
+    renderFilters(); renderGallery();
+    openDetail(stub.id);
+  }catch(e){
+    document.getElementById('lockErr').textContent = '암호가 맞지 않아요';
+  }finally{ btn.disabled = false; }
+}
 async function openDetail(id){
-  const img = db.images.find(i=>i.id===id);
+  let img = db.images.find(i=>i.id===id);
   if(!img) return;
+  if(img.locked){
+    if(!unlocked[id]){ openLockModal(id); return; }
+    img = unlocked[id];
+  }
   currentDetailId = id;
   document.getElementById('detailEditButtons').classList.toggle('hidden', !hasWriteAccess());
   updateDetailPinBtn(img.pinned);
@@ -2946,6 +3511,8 @@ async function openDetail(id){
   detailImgWrap.innerHTML = '';
   detailImgWrap.appendChild(detailImg);
   if(blobCache[img.path]) detailImg.src = blobCache[img.path];
+  detailImg.style.cursor = 'zoom-in';
+  detailImg.onclick = ()=> openLightbox(img.path);
   loadImageIntoHolder(img.path, detailImgWrap, detailImg);
   const cpWrap = document.getElementById('detailCatchphraseWrap');
   const cpList = (img.catchphrases||[]).filter(c=>c.enabled && c.text);
